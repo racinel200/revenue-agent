@@ -1,0 +1,9 @@
+{
+  "id": "dryrun-test-0002-badprice",
+  "intent_type": "product_create",
+  "status": "rejected",
+  "reasons": [
+    "price_usd 999 outside allowed bounds $5-$49"
+  ],
+  "processed_at": "2026-07-20T12:48:02.759245+00:00"
+}
