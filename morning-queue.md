@@ -1,5 +1,19 @@
 # Morning Queue — human checkpoints
 
+## FYI — Iteration 6 update (2026-07-20), no action required yet
+
+Channel picked: **Lemon Squeezy** (Gumroad has no product-creation API — dashboard-only,
+confirmed via an open upstream issue). Next iteration builds the no-secret dry-run relay
+skeleton per your step 2 — still nothing for you to do yet.
+
+**One thing worth reading before you eventually approve the workflow file:** Lemon Squeezy's
+public docs show no evidence of scoped/restricted API keys — a key looks like it's full-account
+access, not limited to products/checkouts. That means the "least-privilege" protection you asked
+for will live entirely in the GitHub Actions workflow's own endpoint whitelist + rate cap +
+logging, not in the credential itself. Revoking the secret (your stated off-switch) is doing more
+of the safety work than a narrowly-scoped key would have. Not a blocker — just flagging it now so
+it's not a surprise when the workflow file lands for your one-time approval.
+
 ## HUMAN DECISION — 2026-07-20 (answers your iteration-5 question)
 
 **Answer: (a) — pursue the autonomous-publish pivot.** For the record: the human's advisor
