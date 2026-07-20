@@ -102,6 +102,65 @@ for every future spreadsheet product built in this environment, not just this on
 
 ## History (append-only, newest first)
 
+### 2026-07-20 — Iteration 10
+- Read protocol + ledger. Ledger top line showed the out-of-band update (relay armed in test
+  mode, first test fire got HTTP 405 on `POST /v1/products` — read-only) and morning-queue.md's
+  explicit next task: research whether Lemon Squeezy's `/v1/checkouts` route (or any other
+  compliant platform) allows creating a sellable product without a human dashboard step, then
+  reach an honest conclusion.
+- Researched via WebSearch/WebFetch (direct sandbox network calls to commerce hosts are still
+  blocked per iteration 5 — used the research tools instead, which are not subject to that
+  proxy block):
+  - **Lemon Squeezy `/v1/checkouts`:** confirmed it requires an existing `variant_id` in the
+    request relationships — a checkout customizes price/appearance for a variant that already
+    exists in the dashboard; it cannot originate a new product. Matches the live 405 finding on
+    `/v1/products` (GET/HEAD only). Also found an open Lemon Squeezy feature request
+    ("API to create and update products and variants," lemonsqueezy.nolt.io/279) confirming this
+    gap is known and unresolved upstream, not a documentation-reading error on our part.
+  - **Payhip (the platform already in use for both live listings):** public API covers only
+    Coupons and License Keys — no product-creation endpoint exists at all. Checked this
+    specifically because if it existed, no new platform/relay would even be needed.
+  - **Stripe:** the one platform found with a genuine product-creation API surface —
+    `POST /v1/products`, `POST /v1/prices`, and the Payment Links API all support real
+    programmatic creation (this is standard, well-documented Stripe functionality, not
+    borderline). But Stripe Payment Links/Checkout has no native digital-file-delivery
+    mechanism like Lemon Squeezy/Gumroad's built-in fulfillment — delivering the purchased file
+    would require standing up a webhook receiver (e.g. listening for `checkout.session.completed`)
+    plus an email/delivery step, which is a materially bigger, different build (a public
+    always-on endpoint, not just a GitHub Actions relay reacting to repo commits) and a new
+    architecture decision in its own right, not a small extension of the current relay.
+- **Honest conclusion, stated plainly per protocol's spirit clause:** fully autonomous
+  create-to-delivery product publishing is not achievable on any platform researched without
+  either (a) a human dashboard step for product creation (Lemon Squeezy, Payhip, and — per
+  iteration 6 — Gumroad), or (b) the agent's side building and maintaining new always-on webhook
+  infrastructure for fulfillment (Stripe). Neither is a small next step from where the relay
+  stands today. The working model going forward is **hybrid**: the agent builds products, writes
+  listing copy, and (for existing Lemon Squeezy products, once any are created) could still use
+  the relay for price updates, payment-link tweaks, and listing metadata — all of which the
+  `/v1/checkouts`, price, and listing endpoints do support once a product exists. New product
+  creation itself stays a human dashboard step. This is not a failure to route around; it is
+  the actual shape of how compliant commerce platforms gate money-taking product creation, found
+  consistently across every platform checked since iteration 5.
+- Did not build a Stripe+webhook relay unprompted — that's a new architecture with new
+  infrastructure and new risk surface (a public endpoint the agent's side would need to keep
+  running), squarely the kind of decision that needs the human's explicit go-ahead first, not
+  something to start on the strength of "the API technically allows it."
+- Did not touch the Lemon Squeezy relay code (schema/validator/workflow untouched) — the
+  test-mode-armed relay stays exactly as iteration 7+the out-of-band update left it, since it's
+  still useful for the reduced hybrid scope (price/listing updates on already-created products).
+- Did not create any account, spend anything, move money, or post to any external platform.
+  Spend budget remains $0.
+- Committed 3 times this iteration (ledger top-line, this history entry, morning-queue.md
+  update), pushing immediately after each.
+- Flag for next run: the honest conclusion above is now the standing model — do not re-litigate
+  "can we make Lemon Squeezy/Payhip create products via API" again, that's settled the same way
+  the LibreOffice sandbox issue and the 8-blocked-commerce-hosts finding are settled. If the
+  human hasn't responded to anything by next run, the next no-human-required action is real
+  distribution work on the `docs/` guide pages (SEO depth, more genuinely useful content) — the
+  tested strategy has had zero real marketing push and still $0 verified sales after 10
+  iterations across ~3 weeks of wall-clock. If the human confirms interest in the Stripe+webhook
+  path, that becomes a new planning iteration, not something to build directly off this flag.
+
 ### 2026-07-20 — Iteration 9
 - Read protocol + ledger. Checked `git log origin/main` since iteration 8: found a new human
   commit, `d1bb138` (real `racinel200` account). Content: Pages is enabled (human chose the free
