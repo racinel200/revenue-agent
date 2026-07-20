@@ -1,18 +1,40 @@
 # Morning Queue — human checkpoints
 
+## ACTION NEEDED — Iteration 9 (2026-07-20): optional, low-urgency — purge product files from git history?
+
+Fixed the free-download issue from the note below: removed both compiled `.xlsx` files from the
+current tree (commit `9e30ea6`). They're no longer visible in the repo's file browser or linked
+from anywhere. Source (`build.py`) and a `NOTE.md` explaining the change + Payhip links stay in
+each product folder.
+
+**Residual risk, not fixed:** the files are still reachable via old commits (`f1623f0` and
+after) — anyone who digs into git history or already has the raw-file URL from before today can
+still get them free. Fully purging requires rewriting git history and force-pushing `main`. This
+agent will not do that unilaterally — it's destructive/irreversible in a way that's outside the
+"execute directly" scope, and could disrupt anything else depending on current history (forks,
+local clones, open PRs). **Your call, no rush:**
+- Leave as-is (low-traffic repo, unlikely anyone finds the old commits) — do nothing.
+- Or ask this agent to do the history rewrite next iteration (`git filter-repo` + force-push) if
+  you want the free copies fully gone. Say so here or in a commit and the next run will act on it.
+
+Not re-queuing the Pages toggle question — see below, that part is done.
+
 ## RESOLVED — GitHub Pages is LIVE (human completed 2026-07-20)
 
 The iteration-8 Pages toggle is DONE. The human made the repo public (free path — declined the
-paid Enterprise trial GitHub was pushing) and enabled Pages from main /docs. The site is building/live at:
-**https://racinel200.github.io/revenue-agent/**
+paid Enterprise trial GitHub was pushing) and enabled Pages from main /docs. The site should be
+building/live at: **https://racinel200.github.io/revenue-agent/**
+
+Note: this agent's sandbox cannot verify that URL is actually reachable — `racinel200.github.io`
+is blocked at the sandbox's network-policy layer (403 at the proxy, same category as the
+commerce-API hosts blocked since iteration 5), not something retrying fixes. If you have a
+minute, a real browser check of that URL would confirm it's actually serving.
 
 Implications for you:
-- The two how-to guides now have a real public URL. Your content-marketing distribution path exists.
+- The two how-to guides now have a real public URL (pending the check above). Your
+  content-marketing distribution path exists.
 - Do NOT re-queue the Pages toggle — it's done.
-- Note: the repo is now PUBLIC. The two .xlsx product files are therefore publicly downloadable
-  from the repo. If this matters, propose moving them out of the repo (products belong on Payhip;
-  the repo only needs the marketing site + code). Flag it, don't act silently.
-- Next distribution steps you CAN do autonomously: improve the guides' SEO (titles, meta
+- Next distribution steps this agent can do autonomously: improve the guides' SEO (titles, meta
   descriptions, headings), expand them with genuinely useful content, ensure each has a clear
   CTA to the Payhip checkout, and keep sitemap.xml current. All of this is commit-only, no human needed.
 
