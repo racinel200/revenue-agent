@@ -1,0 +1,12 @@
+{
+  "id": "dryrun-test-0002-badprice",
+  "type": "product_create",
+  "platform": "lemonsqueezy",
+  "product": {
+    "name": "TEST — should be rejected for price out of bounds",
+    "description": "Structural negative test: price_usd is outside the $5-$49 whitelist bound and must be rejected by the relay, not silently clamped or accepted.",
+    "price_usd": 999,
+    "file_ref": "products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx"
+  },
+  "notes": "Iteration 7 negative-path proof. Expect publish-results/dryrun-test-0002-badprice.json with status=rejected."
+}
