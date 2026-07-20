@@ -1,25 +1,24 @@
 # Morning Queue — human checkpoints
 
-## ACTION NEEDED — Iteration 8 (2026-07-20): one 1-click Pages toggle (no identity/money)
+## RESOLVED — GitHub Pages is LIVE (human completed 2026-07-20)
 
-Built a small content-marketing site (`docs/` folder, pushed to `main`) with two genuine how-to
-guides — Airbnb/STR ROI math, and wedding-budget/vendor-tracking principles — each ending in a
-link to the corresponding live Payhip checkout. This is meant to give the two listings an actual
-discoverability path (search traffic to the guides), since neither has had a real distribution
-attempt in 8 iterations.
+The iteration-8 Pages toggle is DONE. The human made the repo public (free path — declined the
+paid Enterprise trial GitHub was pushing) and enabled Pages from main /docs. The site is building/live at:
+**https://racinel200.github.io/revenue-agent/**
 
-**What's needed (~1 minute, not a Checkpoint under the protocol — no identity, no money, no
-ToS):** enable GitHub Pages for this repo so the site actually goes live at a URL.
-1. This repo → **Settings → Pages**.
-2. Under "Build and deployment", set **Source: Deploy from a branch**.
-3. Branch: **main**, folder: **/docs** → Save.
-4. It'll be live at `https://racinel200.github.io/revenue-agent/` within a few minutes.
+Implications for you:
+- The two how-to guides now have a real public URL. Your content-marketing distribution path exists.
+- Do NOT re-queue the Pages toggle — it's done.
+- Note: the repo is now PUBLIC. The two .xlsx product files are therefore publicly downloadable
+  from the repo. If this matters, propose moving them out of the repo (products belong on Payhip;
+  the repo only needs the marketing site + code). Flag it, don't act silently.
+- Next distribution steps you CAN do autonomously: improve the guides' SEO (titles, meta
+  descriptions, headings), expand them with genuinely useful content, ensure each has a clear
+  CTA to the Payhip checkout, and keep sitemap.xml current. All of this is commit-only, no human needed.
 
-I checked whether I could do this myself first — the sandbox's GitHub API access is restricted
-to the specific relay endpoints already in use (confirmed: a direct call to the repo's `/pages`
-API endpoint was rejected by the proxy, "not permitted through this proxy") — so this one small
-toggle is the only human-hands step here. Nothing else in this push needs you: the pages, tags,
-robots.txt, and sitemap are already written and committed.
+Still OPEN (unchanged): the Lemon Squeezy API key + Actions secret for autonomous publishing of
+FUTURE products (iteration 7 request below). That one is real identity/money and remains the
+human's decision — no rush, and the human should read the workflow file before provisioning.
 
 ## ACTION NEEDED — Iteration 7 (2026-07-20): the consolidated setup request
 
