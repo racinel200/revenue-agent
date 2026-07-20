@@ -1,9 +1,9 @@
 # Revenue Agent Ledger
 
-Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip, $0 sales); autonomous full-cycle publishing CONCLUDED not achievable on any compliant platform researched (Lemon Squeezy /products read-only + checkouts need a pre-existing variant; Payhip API covers only coupons/license keys, no product-creation route; Stripe can create products/prices/payment-links via API but has no native digital-file delivery, so it fails the "no human touches money-taking creation" bar without a whole new webhook-fulfillment build) — hybrid model (agent builds + drafts, human does the ~5-10 min publish/relist step) is now the standing working model, not a fallback | Next action: no-human-required distribution work on the live docs/ guide pages (SEO, content depth) since the tested strategy still has zero real distribution push and $0 verified sales after 10 iterations; separately, if the human wants to fund a Stripe+custom-webhook build later that's a new architecture decision, not something to start unprompted | Needs human: nothing blocking — optional/low-urgency: (1) confirm hybrid-model conclusion and whether to decommission or keep the Lemon Squeezy test-mode relay for future price/listing tweaks on existing products; (2) still-open git-history purge go/no-go from iteration 9, unchanged
+Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip, $0 sales); autonomous full-cycle publishing CONCLUDED not achievable on any compliant platform researched (Lemon Squeezy /products read-only + checkouts need a pre-existing variant; Payhip API covers only coupons/license keys, no product-creation route; Stripe can create products/prices/payment-links via API but has no native digital-file delivery, so it fails the "no human touches money-taking creation" bar without a whole new webhook-fulfillment build) — hybrid model (agent builds + drafts, human does the ~5-10 min publish/relist step) is now the standing working model, not a fallback | Next action: continue no-human-required distribution work (this iteration did on-page SEO depth; next candidate is an off-site channel like Pinterest pin drafts, or expanding docs/ with a third genuinely useful page) since $0 verified sales after 11 iterations means distribution, not more product inventory, is the bottleneck | Needs human: nothing blocking — optional/low-urgency: (1) confirm hybrid-model conclusion and whether to decommission or keep the Lemon Squeezy test-mode relay for future price/listing tweaks on existing products; (2) still-open git-history purge go/no-go from iteration 9, unchanged
 
 ## State
-- Status: iteration 10 complete
+- Status: iteration 11 complete
 - Active strategy: **Micro digital product**, live on Payhip (unchanged, $0 verified sales). In parallel, executing the human-approved pivot to an autonomous publish relay (GitHub Actions executes commerce API calls on the human's behalf; the agent's sandbox never holds a credential).
 - Strategy graveyard: empty.
 - Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — **LIVE**: https://payhip.com/b/EIy4L — $19. Sales: $0 verified.
@@ -101,6 +101,49 @@ for every future spreadsheet product built in this environment, not just this on
   substitute here.
 
 ## History (append-only, newest first)
+
+### 2026-07-20 — Iteration 11
+- Read protocol + ledger (scheduled run, no human checkpoint pending in this iteration).
+  Checked `git log origin/main`: HEAD was exactly `1614c2e`, iteration 10's own last commit —
+  no new human commit since then, so nothing new to integrate from `morning-queue.md`. Per
+  iteration 10's own flag, did not re-litigate the "can any platform create products via API"
+  question (settled) and did not re-ask either open low-urgency item (Lemon Squeezy
+  decommission-or-keep, git-history purge) a repeated time.
+- Per iteration 10's resume-state plan, spent the iteration on no-human-required distribution
+  work: SEO/content depth on the two `docs/` guide pages, since the tested strategy has had
+  zero real marketing push and $0 verified sales after 10 iterations.
+  - Added Open Graph + Twitter Card meta tags and a canonical `<link>` to all three `docs/`
+    pages (hub, Airbnb guide, wedding guide) — improves how each page appears when shared/linked
+    and gives search engines an unambiguous canonical URL.
+  - Added `FAQPage` JSON-LD structured data to both guide pages (3–4 genuine Q&As per page,
+    directly answering questions the existing body content already supports — validated both
+    blocks parse as well-formed JSON before committing, not just eyeballed).
+  - Added a "Worked example" section to each guide with concrete, hand-checked numbers: the
+    Airbnb guide's example ($340k property, 62% occupancy) was computed with a standalone Python
+    script before writing it into the HTML (income $41,866, NOI $25,466, cap rate 7.5%,
+    cash-on-cash 5.6%) — caught and fixed an arithmetic slip in the first draft before it shipped.
+    The wedding guide's example reuses the actual pre-filled product figures already verified in
+    iteration 2 (`verify.py`: $30,000 planned, $29,850 actual, $150 remaining, $18,175 total
+    balance due) rather than inventing new numbers, so the guide and the product stay consistent.
+  - Added a "Common mistakes" section to each guide (3 items each) — genuinely useful content
+    extending the existing explainer, not keyword-stuffed filler.
+  - Updated `sitemap.xml` with `<lastmod>2026-07-20</lastmod>` on all three URLs.
+  - Checked all additions against the legitimacy constraints before writing: no fabricated
+    statistics, no fake reviews/testimonials, no undisclosed affiliation claims, no manipulative
+    SEO (no hidden text, no keyword stuffing) — this is genuine expanded content plus standard,
+    honest structured-data/social-meta practice.
+- Did not touch the Lemon Squeezy relay thread, the git-history question, or product files this
+  iteration. Did not create any account, spend anything, or post to any external platform (this
+  is all commit-only work in the existing public repo). Spend budget remains $0.
+- Committed 3 times this iteration (Airbnb guide, wedding guide, hub+sitemap), pushing
+  immediately after each; committing this ledger update + morning-queue note as the final commits.
+- Flag for next run: if neither open item (Lemon Squeezy relay decision, history purge) has moved,
+  continue distribution work rather than re-asking — candidates not yet done: draft (do not post)
+  Pinterest pin copy for the wedding tracker per iteration 8's suggestion, or add a third `docs/`
+  page if a genuinely useful new topic exists. Still zero real off-site distribution push after
+  11 iterations — on-page SEO alone rarely drives first traffic; an actual off-site channel
+  (even one the human has to manually post, like a Pinterest pin) is probably higher-EV than
+  further on-page polish at this point.
 
 ### 2026-07-20 — Iteration 10
 - Read protocol + ledger. Ledger top line showed the out-of-band update (relay armed in test

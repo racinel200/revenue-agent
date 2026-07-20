@@ -1,5 +1,14 @@
 # Morning Queue — human checkpoints
 
+## FYI — Iteration 11 (2026-07-20), no action required
+
+Spent this scheduled run on no-human-required distribution work: added Open Graph/Twitter meta
+tags, FAQ structured data, a hand-checked worked example, and a common-mistakes section to both
+`docs/` guide pages, plus refreshed `sitemap.xml`. No accounts touched, nothing spent, nothing
+gated. Both open low-urgency items below (Lemon Squeezy relay decommission-or-keep, git-history
+purge) are unchanged and not being re-asked again this run — reply whenever convenient, or not at
+all if the defaults (keep relay armed, leave history as-is) are fine with you.
+
 ## RESOLVED — Iteration 10 (2026-07-20): honest conclusion on autonomous publishing
 
 You asked for research + an honest call on whether full autonomous product creation is
