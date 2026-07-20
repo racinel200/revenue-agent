@@ -1,6 +1,6 @@
 # Revenue Agent Ledger
 
-Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip); Pages site LIVE per human (sandbox can't verify — host blocked at proxy); fixed a self-inflicted leak where the paid .xlsx files were freely downloadable from the now-public repo | Next action: awaiting human on TWO independent items — (1) Lemon Squeezy API key + GitHub Actions secret (blocks autonomous publishing of future products), (2) optional decision on whether to force-push a git-history purge of the old public .xlsx blobs (low urgency, agent won't do this unilaterally) — see morning-queue.md | Needs human: **yes, two items.** (1) File a Lemon Squeezy API key and add it as a GitHub Actions secret named `LEMONSQUEEZY_API_KEY` — no scoped-key option exists, so the workflow's endpoint whitelist is the real enforcement layer and revoking the secret is the off-switch. (2) Say go/no-go on a git-history rewrite + force-push to fully scrub the old .xlsx blobs from history (current tree is already clean as of iteration 9) — not urgent, purely the human's call.
+Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip, $0 sales); autonomous-publish relay ARMED in TEST MODE and proven end-to-end — BUT first test fire revealed Lemon Squeezy POST /v1/products returns 405 (read-only), so programmatic product creation is NOT possible there | Next action: research whether ANY compliant platform allows script-based product creation (skeptical — see morning-queue.md); if not, conclude honestly that hybrid (agent builds + drafts, human publishes) is the working model | Needs human: nothing blocking — do NOT request a live key; live is off the table until a working test-mode create path is proven AND human approves
 
 ## State
 - Status: iteration 9 complete
@@ -369,3 +369,15 @@ for every future spreadsheet product built in this environment, not just this on
 - Did NOT create any marketplace account, upload anything, or spend anything — all of that is
   queued for the human per the Checkpoints rule (spend budget is $0; account creation is
   gated). See `morning-queue.md`.
+
+### 2026-07-20 — Out-of-band update (human + assistant, between iterations)
+- Lemon Squeezy store created; TEST-mode API key + store ID added as GitHub Actions secrets.
+- Relay armed via human-reviewed PR #1 (merged): executor runs after validator, with a hard
+  test-mode guard (assert_test_mode via /v1/users/me). Whitelist/bounds/rate-cap intact.
+- First test intent `testfire-0001` (product_create) fired the workflow end-to-end successfully.
+- **FINDING: the create call returned HTTP 405 — `POST /v1/products` is not supported (read-only).**
+  Programmatic product creation is not available on Lemon Squeezy's /products route. This
+  invalidates the iteration-6 platform assumption. Full 405 in publish-results/testfire-0001.json.
+- Relay pipeline itself is proven and safe (no money touched, test-mode guard worked). Blocker is
+  the platform API, not the relay. Next: honest research on whether autonomous product creation is
+  achievable on ANY compliant platform, else adopt the hybrid model as the real answer.
