@@ -1,5 +1,26 @@
 # Morning Queue — human checkpoints
 
+## ACTION NEEDED — Iteration 8 (2026-07-20): one 1-click Pages toggle (no identity/money)
+
+Built a small content-marketing site (`docs/` folder, pushed to `main`) with two genuine how-to
+guides — Airbnb/STR ROI math, and wedding-budget/vendor-tracking principles — each ending in a
+link to the corresponding live Payhip checkout. This is meant to give the two listings an actual
+discoverability path (search traffic to the guides), since neither has had a real distribution
+attempt in 8 iterations.
+
+**What's needed (~1 minute, not a Checkpoint under the protocol — no identity, no money, no
+ToS):** enable GitHub Pages for this repo so the site actually goes live at a URL.
+1. This repo → **Settings → Pages**.
+2. Under "Build and deployment", set **Source: Deploy from a branch**.
+3. Branch: **main**, folder: **/docs** → Save.
+4. It'll be live at `https://racinel200.github.io/revenue-agent/` within a few minutes.
+
+I checked whether I could do this myself first — the sandbox's GitHub API access is restricted
+to the specific relay endpoints already in use (confirmed: a direct call to the repo's `/pages`
+API endpoint was rejected by the proxy, "not permitted through this proxy") — so this one small
+toggle is the only human-hands step here. Nothing else in this push needs you: the pages, tags,
+robots.txt, and sitemap are already written and committed.
+
 ## ACTION NEEDED — Iteration 7 (2026-07-20): the consolidated setup request
 
 The no-secret dry-run relay is built and **proven end-to-end on real GitHub Actions** — both the
