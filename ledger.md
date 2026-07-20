@@ -1,15 +1,15 @@
 # Revenue Agent Ledger
 
-Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (spreadsheet templates) | Next action: human publishes both product listings (Payhip now recommended over Gumroad — faster/cheaper, see morning-queue.md); agent holds on product #3 until a listing is live | Needs human: pick a marketplace (Payhip recommended, ~5 min, no review queue) and publish both existing products — see morning-queue.md for exact steps
+Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (spreadsheet templates) | Next action: human answers the quick question in morning-queue.md (time / friction / doubt / other) and, if ready, publishes both listings via the single fastest path (Payhip, ~10 min total) | Needs human: 1) a one-line answer to why the checkpoint hasn't been actioned in 4 iterations, 2) if ready, ~10 min to publish both existing products — see morning-queue.md, now simplified to one question + one path
 
 ## State
-- Status: iteration 3 complete
+- Status: iteration 4 complete
 - Active strategy: **Micro digital product** — spreadsheet templates sold on an existing marketplace (menu item #1). Human owns the marketplace account per Checkpoints rule; agent builds the product and copy.
 - Strategy graveyard: empty (no strategy has failed 3 iterations yet — and per the note below, the strategy still hasn't actually been tested, since no listing has ever gone live)
-- Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — Airbnb/short-term-rental ROI & cash flow calculator. Built, committed, pushed. NOT yet listed anywhere (blocked on human — see Checkpoints). Still unpublished after 3 iterations.
-- Product #2: `products/wedding-budget-planner/Wedding_Budget_Vendor_Tracker.xlsx` — wedding budget overview (SUMIF category rollups) + vendor/deposit/balance-due payment tracker. Built, committed, pushed. NOT yet listed anywhere (blocked on human — see Checkpoints). Still unpublished after 2 iterations.
+- Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — Airbnb/short-term-rental ROI & cash flow calculator. Built, committed, pushed. NOT yet listed anywhere (blocked on human — see Checkpoints). Still unpublished after 4 iterations.
+- Product #2: `products/wedding-budget-planner/Wedding_Budget_Vendor_Tracker.xlsx` — wedding budget overview (SUMIF category rollups) + vendor/deposit/balance-due payment tracker. Built, committed, pushed. NOT yet listed anywhere (blocked on human — see Checkpoints). Still unpublished after 3 iterations.
 - Repo: racinel200/revenue-agent, branch main, all work pushed as of this run.
-- Resume state for next session: checked for a reply (git log, repo state) — none found; both products remain unpublished with zero human action on the checkpoint for a 3rd straight iteration. Per the plan laid out in iteration 2, did NOT build product #3 and did NOT treat this as a failed/buried strategy (it's never had a live listing, so there's no market signal against it, only against the publish step being slow). Instead spent this iteration reducing the friction on the actual blocker: researched faster/cheaper alternatives to Gumroad and found Payhip (~5 min signup, no review queue, 5% fee vs Gumroad's 10%) — added as the recommended path in `morning-queue.md`, with Gumroad kept as a fine alternative. Next session: if still no reply, that's 4 iterations — worth directly asking the human (via ledger/queue note) whether the blocker is platform friction, time/priority, or the strategy itself, rather than researching yet another marketplace option unprompted.
+- Resume state for next session: checked for a reply (git log against origin/main, working tree, morning-queue.md) — confirmed none; 4th straight iteration with zero human action on the publish checkpoint. Per the flag left at the end of iteration 3, did NOT research yet another marketplace option and did NOT build product #3 (still no live listing = no market signal to act on, only a checkpoint that keeps not getting actioned — more inventory would compound that, not fix it). Instead, this iteration's highest-EV no-human-required action was to reduce decision friction on the ask itself: rewrote the top of `morning-queue.md` into (a) one short multiple-choice question — is the blocker time, friction, doubt about the strategy, or something else — so a future reply can be as short as one letter, and (b) a single consolidated "fastest path" (Payhip, ~10 min for both listings) replacing the longer platform-comparison instructions, which are kept below as reference/fallback but no longer need to be read to act. Next session: if there's still no reply, that's 5 iterations on the same ask — per protocol's spirit (don't nag, don't idle), stop asking again in the same way; either treat prolonged silence as an implicit "not now" and de-prioritize this thread until the human initiates, or (if the ledger shows this pattern repeating) surface it as a flag that the checkpoint-based bootstrap strategy itself may not fit how this human wants to operate the agent, which would be a strategy-graveyard-adjacent judgment call worth stating plainly rather than re-asking a 5th time.
 
 ## Known environment issue (read before next run)
 LibreOffice (`soffice`) cannot load documents via the CLI in this sandbox when given a
@@ -34,6 +34,30 @@ for every future spreadsheet product built in this environment, not just this on
   substitute here.
 
 ## History (append-only, newest first)
+
+### 2026-07-20 — Iteration 4
+- Read protocol + ledger. Checked `git log origin/main`, working tree, and `morning-queue.md`
+  for any human reply since iteration 3 — none found. 4th straight iteration with zero action
+  on the publish checkpoint (product #1: 4 iterations unpublished; product #2: 3).
+- Per the flag iteration 3 left for itself, did not research another marketplace alternative
+  and did not build a 3rd product — neither would test the strategy or reduce the actual
+  blocker, and more unpublished inventory only compounds the existing backlog.
+- Judged the highest-EV no-human-required action to be reducing friction on the *ask* itself,
+  not the platform: `morning-queue.md` had grown into two long numbered sections plus a
+  "fastest path" callout — a lot to read for someone who may just be short on time. Rewrote the
+  top of the file into (a) a single multiple-choice question (time / friction / doubt about the
+  strategy / other) answerable in one word, and (b) one consolidated 4-step "single fastest
+  path" (Payhip, ~10 min total for both listings), with the prior longer Gumroad-first
+  instructions kept below as reference/fallback, not deleted.
+- Did not create any account, upload anything, or spend anything — same as every prior
+  iteration, all still gated by Checkpoints (spend budget remains $0).
+- Committed `morning-queue.md` and this ledger update as separate commits, pushed both to
+  `main` immediately after each.
+- Flag for next run: if iteration 5 still finds no reply, this is the 5th ask in a row with no
+  response — stop re-asking in the same form. Either read the silence as an implicit "not now"
+  and hold state quietly until the human initiates, or explicitly flag in the ledger that the
+  checkpoint-gated bootstrap approach may not be the right operating mode for this human right
+  now, rather than generating a 5th variant of the same request.
 
 ### 2026-07-20 — Iteration 3
 - Read protocol + ledger. Checked repo state for any sign the human published product #1 or #2
