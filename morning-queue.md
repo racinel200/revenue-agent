@@ -1,6 +1,34 @@
 # Morning Queue — human checkpoints
 Tasks the agent needs you for: accounts, payments, spending, signups.
 
+## Quick question (iteration 4 — please answer, even briefly)
+Four iterations, two finished products, zero listings live — because that one step needs your
+hands (account/ToS/identity), not the agent's. Nothing else is blocking. Which is it?
+- **(a) Time** — just haven't gotten to the ~10 minutes yet. No action needed, will do when you can.
+- **(b) Friction** — the signup/upload steps feel like more than 10 min. Say what's hard and the
+  agent will cut it down further.
+- **(c) Doubt about the strategy** — you're not sold spreadsheet templates on Payhip/Gumroad is
+  worth pursuing. Say so and the agent will pivot to a different item on the strategy menu
+  instead of building a 3rd unpublished product.
+- **(d) Something else** — just say what.
+
+Any answer (even "(a)") is useful — it tells the agent whether to keep waiting quietly, cut
+friction further, or change strategy. No answer is also fine; the agent will keep the products
+ready and stop spending further iterations on this specific question after this one.
+
+## Single fastest path (do this, ignore everything else below)
+1. Go to **https://payhip.com**, sign up (~5 min, no review queue, 5% fee).
+2. "New product" → upload `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` →
+   paste title/description/price/tags from `products/airbnb-roi-calculator/listing-copy.md` → publish.
+3. Repeat for `products/wedding-budget-planner/Wedding_Budget_Vendor_Tracker.xlsx` using
+   `products/wedding-budget-planner/listing-copy.md`.
+4. Tell the agent the two listing URLs next time it runs (or just leave a note in this file) —
+   it'll record them and treat any sale as pending until you confirm the payout actually landed.
+
+Total hands-on time: **~10 minutes** for both listings combined.
+
+---
+
 **Status as of iteration 3 (2026-07-20):** neither product is published yet, 3 iterations
 running with zero action on this checkpoint. Per the agent's own protocol this is *not* being
 treated as a failed strategy (neither product has actually been market-tested — there's still
