@@ -1,14 +1,18 @@
-name: Publish Relay (dry run)
+name: Publish Relay (test-mode execution)
 
-# DRY-RUN PHASE — this workflow references NO secret, anywhere. It is
-# structurally incapable of making a real commerce API call, not merely
-# configured not to. Real execution requires a separately approved change
-# that adds a scoped credential to GitHub Actions Secrets (a human
-# checkpoint — see morning-queue.md).
+# TEST-MODE EXECUTION PHASE — the validator remains the first step and still
+# references no secret. A second step then executes ONLY intents the
+# validator marked "validated_dry_run", and only after
+# .github/scripts/execute_intents.py's assert_test_mode() confirms via
+# GET /v1/users/me that LEMONSQUEEZY_API_KEY is a TEST MODE key — a
+# live-mode key aborts the run before any commerce call is made.
 #
-# Endpoint whitelist, price bounds, rate cap, and the forbidden-key rule are
-# enforced in .github/scripts/validate_and_echo.py — see
-# publish-requests/SCHEMA.md for the intent format.
+# Only the product_create endpoint (POST /v1/products) is armed. The
+# executor independently re-enforces the endpoint whitelist, the $5-$49
+# price bounds, the forbidden-key rule, and the daily rate cap; it never
+# logs the API key.
+#
+# See publish-requests/SCHEMA.md for the intent format.
 
 on:
   push:
@@ -20,7 +24,7 @@ permissions:
   contents: write
 
 jobs:
-  validate-and-echo:
+  validate-and-execute:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,6 +36,13 @@ jobs:
       - name: Validate intents and write dry-run results
         run: python3 .github/scripts/validate_and_echo.py
 
+      - name: Execute validated intents (Lemon Squeezy TEST MODE only)
+        env:
+          LEMONSQUEEZY_API_KEY: ${{ secrets.LEMONSQUEEZY_API_KEY }}
+          LEMONSQUEEZY_STORE_ID: ${{ secrets.LEMONSQUEEZY_STORE_ID }}
+          RELAY_MODE: execute
+        run: python3 .github/scripts/execute_intents.py
+
       - name: Commit results
         run: |
           git config user.name "revenue-agent-relay"
@@ -40,6 +51,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No new results to commit"
           else
-            git commit -m "Relay: dry-run validate + echo results [skip ci]"
+            git commit -m "Relay: validate + test-mode execute results [skip ci]"
             git push
           fi
