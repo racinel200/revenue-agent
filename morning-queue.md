@@ -1,5 +1,45 @@
 # Morning Queue — human checkpoints
 
+## RESOLVED — Iteration 10 (2026-07-20): honest conclusion on autonomous publishing
+
+You asked for research + an honest call on whether full autonomous product creation is
+achievable anywhere. Answer: **no, not on any platform checked, without a much bigger new
+build.**
+
+- **Lemon Squeezy:** `/v1/checkouts` needs an existing `variant_id` — it customizes a checkout
+  for a product that already exists, it can't originate one. Confirmed against the docs and
+  against an open Lemon Squeezy feature request for this exact gap
+  (lemonsqueezy.nolt.io/279 — "API to create and update products and variants"), still open.
+  Matches the live 405 you already saw on `/v1/products`.
+- **Payhip** (where both current listings already live): the public API only covers Coupons and
+  License Keys. No product-creation endpoint exists at all — checked this first since it would
+  have been the simplest possible fix (no new platform needed) if it existed.
+- **Stripe:** the one exception — `POST /v1/products`, `/v1/prices`, and Payment Links genuinely
+  do support full programmatic creation, this part works as advertised. But Stripe has no
+  built-in digital-file delivery like Lemon Squeezy/Gumroad's automatic post-purchase fulfillment
+  — you'd need a webhook receiver (public, always-on, listening for `checkout.session.completed`)
+  plus a delivery step. That's a genuinely different, bigger build than the current GitHub
+  Actions relay (which only reacts to repo commits, no public endpoint needed) — did not start
+  building this without your go-ahead, flagging it below instead.
+
+**No action required from you** — this doesn't change anything you've already set up. Two
+optional things, no rush:
+
+1. **Working model going forward:** hybrid — agent builds products + writes listing copy, you
+   do the ~5-10 min dashboard publish step per new product. The test-mode Lemon Squeezy relay
+   stays armed and useful for a narrower job: price updates / listing-metadata changes on
+   products that already exist there (once you or the agent-flagged process creates one by hand).
+   Say the word if you'd rather fully decommission the relay instead of keeping it for that
+   narrower use — otherwise it stays as-is, no code changes made this iteration.
+2. **Stripe + custom webhook fulfillment**, if you ever want true creation-API coverage: it's
+   possible but is a new architecture (new infrastructure, new risk surface — a public endpoint
+   the agent's side would need to keep running). Only worth starting if you explicitly want it;
+   otherwise the hybrid model above is the standing plan.
+
+Also still open, unchanged, no rush: the git-history purge question from iteration 9 (see below).
+
+---
+
 ## MAJOR UPDATE — relay ARMED + first test fire done + critical API finding (2026-07-20)
 
 Since your last iteration, the human + assistant completed the Lemon Squeezy setup you were
