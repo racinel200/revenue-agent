@@ -1,9 +1,9 @@
 # Revenue Agent Ledger
 
-Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip, $0 sales); autonomous full-cycle publishing CONCLUDED not achievable on any compliant platform researched (Lemon Squeezy /products read-only + checkouts need a pre-existing variant; Payhip API covers only coupons/license keys, no product-creation route; Stripe can create products/prices/payment-links via API but has no native digital-file delivery, so it fails the "no human touches money-taking creation" bar without a whole new webhook-fulfillment build) — hybrid model (agent builds + drafts, human does the ~5-10 min publish/relist step) is now the standing working model, not a fallback | Next action: continue no-human-required distribution work (this iteration did on-page SEO depth; next candidate is an off-site channel like Pinterest pin drafts, or expanding docs/ with a third genuinely useful page) since $0 verified sales after 11 iterations means distribution, not more product inventory, is the bottleneck | Needs human: nothing blocking — optional/low-urgency: (1) confirm hybrid-model conclusion and whether to decommission or keep the Lemon Squeezy test-mode relay for future price/listing tweaks on existing products; (2) still-open git-history purge go/no-go from iteration 9, unchanged
+Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip, $0 sales); autonomous full-cycle publishing CONCLUDED not achievable on any compliant platform researched (Lemon Squeezy /products read-only + checkouts need a pre-existing variant; Payhip API covers only coupons/license keys, no product-creation route; Stripe can create products/prices/payment-links via API but has no native digital-file delivery, so it fails the "no human touches money-taking creation" bar without a whole new webhook-fulfillment build) — hybrid model (agent builds + drafts, human does the ~5-10 min publish/relist step) is now the standing working model, not a fallback | Next action: first off-site distribution asset now drafted (Pinterest pin copy for the wedding tracker, 5 pins, not posted — needs human's own Pinterest account); next candidate is either an equivalent Airbnb-guide off-site draft (lower priority per iteration 8 — Pinterest fits the wedding niche better than real-estate) or a third genuinely useful docs/ page, since $0 verified sales after 12 iterations still means distribution, not more product inventory, is the bottleneck | Needs human: nothing blocking — optional/low-urgency: (1) post the drafted Pinterest pins (products/wedding-budget-planner/pinterest-pins.md) if interested — first task requiring the human's own account/identity for actual distribution reach; (2) confirm hybrid-model conclusion and whether to decommission or keep the Lemon Squeezy test-mode relay; (3) still-open git-history purge go/no-go from iteration 9, unchanged
 
 ## State
-- Status: iteration 11 complete
+- Status: iteration 12 complete
 - Active strategy: **Micro digital product**, live on Payhip (unchanged, $0 verified sales). In parallel, executing the human-approved pivot to an autonomous publish relay (GitHub Actions executes commerce API calls on the human's behalf; the agent's sandbox never holds a credential).
 - Strategy graveyard: empty.
 - Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — **LIVE**: https://payhip.com/b/EIy4L — $19. Sales: $0 verified.
@@ -101,6 +101,37 @@ for every future spreadsheet product built in this environment, not just this on
   substitute here.
 
 ## History (append-only, newest first)
+
+### 2026-07-20 — Iteration 12
+- Scheduled run (no human checkpoint pending). Checked `git log origin/main`: HEAD was exactly
+  `8ca46e4`, iteration 11's own last commit — no new human commit since then, so nothing new to
+  integrate from `morning-queue.md`. Per iteration 11's flag, did not re-ask either open
+  low-urgency item (Lemon Squeezy decommission-or-keep, git-history purge) again.
+- Per iteration 11's resume-state plan, did the first real off-site distribution asset: drafted
+  (did **not** post) Pinterest pin copy for the wedding tracker in
+  `products/wedding-budget-planner/pinterest-pins.md` — 5 distinct pins (problem/solution,
+  worked-example hook, mistake-avoidance hook, audience-specific for wedding-party helpers,
+  direct/utility), each linking to the existing `docs/wedding-budget-planner/` guide page rather
+  than straight to checkout (standard Pinterest etiquette — guide-first, not a bare product link).
+  Checked every claim against the legitimacy constraints before writing: no fabricated stats, no
+  testimonials, no fake urgency/"trending" framing; the $30,000 worked-example numbers reused are
+  the same ones already verified in iteration 2 (`verify.py`) and already published on the guide
+  page, not new numbers invented for Pinterest.
+- Did not draft image assets (that's a design step, left as a note for whoever posts) and did not
+  draft an equivalent set for the Airbnb calculator this iteration — per iteration 8's own
+  reasoning, Pinterest is a materially better organic-discovery fit for the wedding niche than for
+  real-estate/investor buyers, so the wedding draft was the higher-EV single action to ship this
+  run rather than splitting effort across both products.
+- Posting these pins still requires the human's own Pinterest account (identity/account creation
+  is a Checkpoint) — queued as a new, low-urgency, non-blocking optional task in
+  `morning-queue.md`. Did not create any account, spend anything, or post anything to any external
+  platform. Spend budget remains $0.
+- Committed the pin-copy file immediately after writing it, pushed to `main`; committing this
+  ledger + morning-queue update as the final commit of the iteration.
+- Flag for next run: if the pins haven't been posted and neither open item has moved, next
+  no-human-required candidates are (a) an equivalent Pinterest draft for the Airbnb calculator
+  (lower priority, see above) or (b) a third genuinely useful `docs/` page — still $0 verified
+  sales after 12 iterations, so distribution work continues to be higher-EV than more inventory.
 
 ### 2026-07-20 — Iteration 11
 - Read protocol + ledger (scheduled run, no human checkpoint pending in this iteration).

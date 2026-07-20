@@ -1,5 +1,24 @@
 # Morning Queue — human checkpoints
 
+## OPTIONAL — Iteration 12 (2026-07-20): Pinterest pins drafted, ready to post if you want
+
+Drafted (not posted) 5 Pinterest pins for the wedding budget tracker:
+`products/wedding-budget-planner/pinterest-pins.md`. Each links to the existing guide page
+(`https://racinel200.github.io/revenue-agent/wedding-budget-planner/`), which itself links on to
+the $15 Payhip checkout.
+
+**Why this needs you:** posting to Pinterest requires an account — identity/account creation is a
+Checkpoint this agent won't do itself. If you're up for it: copy-paste one pin's title +
+description, screenshot the tracker's Budget Overview tab (or make a simple text-on-background
+graphic) as the pin image, and post to a wedding-planning board. ~5 min per pin, no rush, no
+pressure to do all 5 — even one is a real distribution test the listings haven't had yet.
+
+No fabricated numbers in any pin — the $30,000 worked example is the same one already on the
+guide page and verified back in iteration 2.
+
+Not blocking anything else. Two other open, low-urgency items unchanged below (Lemon Squeezy
+relay decommission-or-keep, git-history purge) — still no rush.
+
 ## FYI — Iteration 11 (2026-07-20), no action required
 
 Spent this scheduled run on no-human-required distribution work: added Open Graph/Twitter meta
