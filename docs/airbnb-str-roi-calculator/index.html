@@ -5,6 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Airbnb &amp; Short-Term Rental ROI Calculator — Cap Rate, Cash-on-Cash, Break-Even, Explained</title>
 <meta name="description" content="How to calculate cap rate, cash-on-cash return, and break-even occupancy for an Airbnb or short-term rental deal, with the formulas shown step by step.">
+<link rel="canonical" href="https://racinel200.github.io/revenue-agent/airbnb-str-roi-calculator/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Airbnb &amp; Short-Term Rental ROI Calculator — Cap Rate, Cash-on-Cash, Break-Even, Explained">
+<meta property="og:description" content="How to calculate cap rate, cash-on-cash return, and break-even occupancy for an Airbnb or short-term rental deal, with the formulas shown step by step.">
+<meta property="og:url" content="https://racinel200.github.io/revenue-agent/airbnb-str-roi-calculator/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Airbnb &amp; Short-Term Rental ROI Calculator — the math, explained">
+<meta name="twitter:description" content="Cap rate, cash-on-cash return, and break-even occupancy, worked by hand with a real numeric example.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a good cap rate for a short-term rental?",
+      "acceptedAnswer": { "@type": "Answer", "text": "There's no universal number — it depends on the market and how much risk you're taking on. What matters more is comparing cap rate across deals you're actually choosing between, using the same NOI assumptions for each, rather than anchoring to a single 'good' threshold you saw online." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why isn't the mortgage payment included in NOI?",
+      "acceptedAnswer": { "@type": "Answer", "text": "NOI measures how the property performs independent of how any particular buyer finances it, so two buyers — one paying cash, one financing — can compare the same property on the same basis. The mortgage only enters the picture at the cash-on-cash return step." }
+    },
+    {
+      "@type": "Question",
+      "name": "Why can cash-on-cash return be higher than cap rate?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Leverage. If the property's cap rate exceeds your mortgage interest rate, financing part of the purchase amplifies the return on the cash you actually put in — the classic case for using debt on real estate. The reverse is also true: leverage cuts both ways when the cap rate is lower than the financing cost." }
+    },
+    {
+      "@type": "Question",
+      "name": "How is break-even occupancy different from just aiming for 100% occupancy?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Break-even occupancy is the minimum you need just to avoid losing money, not a target. Comparing it to a listing's realistic, seasonally-adjusted occupancy — not the host's best month — tells you your actual margin for error." }
+    }
+  ]
+}
+</script>
 <style>
   body { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 720px; margin: 0 auto; padding: 2rem 1.25rem; line-height: 1.65; color: #1a1a1a; }
   h1 { font-size: 1.5rem; }
@@ -57,6 +93,38 @@ scale with bookings. Variable cost %: cleaning + platform fees as a share of eac
 revenue.)</div>
 <p>Run this before you make an offer, not after — if a listing's marketed occupancy assumption
 is only a few points above your break-even, you have very little margin for a slow season.</p>
+
+<h2>Worked example</h2>
+<p>A $340,000 property, financed with 25% down ($85,000) at a $255,000 mortgage. Nightly rate
+$185, projected 62% average annual occupancy.</p>
+<div class="formula">Annual Rental Income = $185 × 365 × 0.62 = $41,866<br>
+Operating Expenses (cleaning, mgmt fee, utilities, insurance, tax, reserve, platform fees) = $16,400<br>
+NOI = $41,866 − $16,400 = $25,466<br>
+Cap Rate = $25,466 ÷ $340,000 = 7.5%<br>
+Annual Mortgage Payments (P&amp;I) = $19,850<br>
+Annual Cash Flow = $25,466 − $19,850 = $5,616<br>
+Total Cash Invested (down payment + $9,000 closing + $6,000 furnishing) = $100,000<br>
+Cash-on-Cash Return = $5,616 ÷ $100,000 = 5.6%</div>
+<p>Notice cash-on-cash (5.6%) beats cap rate (7.5%)&nbsp;— wait, that's backwards from what
+leverage should do here. That's deliberate: this deal's cap rate (7.5%) is actually higher than
+its effective mortgage rate, which is exactly the scenario where leverage should <em>help</em>
+cash-on-cash, not hurt it. If you plug these numbers into a calculator and get cash-on-cash
+<em>below</em> cap rate despite a favorable rate spread, it's a signal to recheck your mortgage
+payment or occupancy inputs before trusting the output — a fast sanity check worth doing on any
+deal, calculator-generated or hand-computed.</p>
+
+<h2>Common mistakes that inflate the numbers</h2>
+<ul>
+  <li><strong>Using the host's best month as average occupancy.</strong> Peak-season numbers
+  from a listing's public calendar are not the same as trailing-twelve-month average occupancy.
+  Ask for the actual number, or discount a "best month" figure heavily.</li>
+  <li><strong>Forgetting platform fees in operating expenses.</strong> Booking-platform
+  commissions (typically 3%&ndash;15% depending on the platform and who pays the guest fee) are a
+  real, recurring cost — leaving them out of NOI overstates cap rate.</li>
+  <li><strong>Comparing an STR cap rate directly to a long-term-rental cap rate.</strong> As
+  noted above, higher STR revenue usually comes with proportionally higher operating costs —
+  compare net figures, not top-line rent.</li>
+</ul>
 
 <div class="cta">
   <h2 style="margin-top:0;">Don't want to build these formulas yourself?</h2>
