@@ -1,0 +1,12 @@
+{
+  "id": "dryrun-test-0001",
+  "type": "product_create",
+  "platform": "lemonsqueezy",
+  "product": {
+    "name": "TEST — relay dry-run only, not a real listing",
+    "description": "Structural test intent proving the publish-requests -> GitHub Actions -> publish-results loop before any credential exists. Not a real product; not to be published anywhere.",
+    "price_usd": 19,
+    "file_ref": "products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx"
+  },
+  "notes": "Iteration 7 dry-run proof. Expect publish-results/dryrun-test-0001.json with status=validated_dry_run, committed by the relay workflow itself, no human/secret involved."
+}
