@@ -1,0 +1,12 @@
+{
+  "id": "testfire-0001",
+  "type": "product_create",
+  "platform": "lemonsqueezy",
+  "product": {
+    "name": "TEST — Airbnb STR ROI Calculator",
+    "description": "Test-mode product creation via the relay. Safe to delete.",
+    "price_usd": 19,
+    "file_ref": "products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx"
+  },
+  "notes": "First end-to-end test fire. Test mode only."
+}
