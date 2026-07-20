@@ -1,15 +1,17 @@
 # Revenue Agent Ledger
 
-Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (spreadsheet templates) | Next action: human answers the quick question in morning-queue.md (time / friction / doubt / other) and, if ready, publishes both listings via the single fastest path (Payhip, ~10 min total) | Needs human: 1) a one-line answer to why the checkpoint hasn't been actioned in 4 iterations, 2) if ready, ~10 min to publish both existing products — see morning-queue.md, now simplified to one question + one path
+Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings now LIVE on Payhip); researching autonomous-publish pivot per new standing directive | Next action: human decides how to handle the confirmed network-policy block on every commerce API tested (see iteration 5) — allowlist one specific host, or accept the pivot isn't feasible in this sandbox and keep the (now lighter, batched) per-listing checkpoint model | Needs human: 1) confirm/paste actual payout amounts once Payhip reports a sale (sales are PENDING, not verified, until then), 2) a decision on the network-policy question below so research can target a channel that's actually reachable instead of guessing further
 
 ## State
-- Status: iteration 4 complete
-- Active strategy: **Micro digital product** — spreadsheet templates sold on an existing marketplace (menu item #1). Human owns the marketplace account per Checkpoints rule; agent builds the product and copy.
-- Strategy graveyard: empty (no strategy has failed 3 iterations yet — and per the note below, the strategy still hasn't actually been tested, since no listing has ever gone live)
-- Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — Airbnb/short-term-rental ROI & cash flow calculator. Built, committed, pushed. NOT yet listed anywhere (blocked on human — see Checkpoints). Still unpublished after 4 iterations.
-- Product #2: `products/wedding-budget-planner/Wedding_Budget_Vendor_Tracker.xlsx` — wedding budget overview (SUMIF category rollups) + vendor/deposit/balance-due payment tracker. Built, committed, pushed. NOT yet listed anywhere (blocked on human — see Checkpoints). Still unpublished after 3 iterations.
+- Status: iteration 5 complete
+- Active strategy: **Micro digital product**, now live — spreadsheet templates sold on Payhip (human-owned account). A new standing directive (below) asks the agent to research a pivot to fully autonomous end-to-end publishing; that research is in progress, not yet actionable.
+- Strategy graveyard: empty. The manual-checkpoint marketplace strategy is no longer untested — both listings are live for the first time (iteration 5), so the next real signal is whether either sells.
+- Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — Airbnb/STR ROI & cash flow calculator. **LIVE**: https://payhip.com/b/EIy4L — $19. Published by the human 2026-07-20. Sales: $0 verified (none reported yet).
+- Product #2: `products/wedding-budget-planner/Wedding_Budget_Vendor_Tracker.xlsx` — wedding budget + vendor/payment tracker. **LIVE**: https://payhip.com/b/orgX0 — $15. Published by the human 2026-07-20. Sales: $0 verified (none reported yet).
 - Repo: racinel200/revenue-agent, branch main, all work pushed as of this run.
-- Resume state for next session: checked for a reply (git log against origin/main, working tree, morning-queue.md) — confirmed none; 4th straight iteration with zero human action on the publish checkpoint. Per the flag left at the end of iteration 3, did NOT research yet another marketplace option and did NOT build product #3 (still no live listing = no market signal to act on, only a checkpoint that keeps not getting actioned — more inventory would compound that, not fix it). Instead, this iteration's highest-EV no-human-required action was to reduce decision friction on the ask itself: rewrote the top of `morning-queue.md` into (a) one short multiple-choice question — is the blocker time, friction, doubt about the strategy, or something else — so a future reply can be as short as one letter, and (b) a single consolidated "fastest path" (Payhip, ~10 min for both listings) replacing the longer platform-comparison instructions, which are kept below as reference/fallback but no longer need to be read to act. Next session: if there's still no reply, that's 5 iterations on the same ask — per protocol's spirit (don't nag, don't idle), stop asking again in the same way; either treat prolonged silence as an implicit "not now" and de-prioritize this thread until the human initiates, or (if the ledger shows this pattern repeating) surface it as a flag that the checkpoint-based bootstrap strategy itself may not fit how this human wants to operate the agent, which would be a strategy-graveyard-adjacent judgment call worth stating plainly rather than re-asking a 5th time.
+- Standing directive (from human, via commit `ac7cc3e` on `main`, 2026-07-20 — see `morning-queue.md`): pivot toward the human doing ONE-TIME setup (account/ToS/payment/API key) after which the agent publishes new products end-to-end with no per-product human action. Requires: feasibility confirmed before any setup is requested, one consolidated minimal-scope setup ask, all existing protocol rules still bind, explicit credential-storage/risk statement, and a distribution/discoverability plan (a listing nobody sees earns $0).
+- Feasibility finding (iteration 5, see History): **every commerce/payment API host tested from this sandbox is blocked at the network-proxy level** (403 policy denial, confirmed via `$HTTPS_PROXY/__agentproxy/status`) — Stripe, Gumroad, Payhip, Lemon Squeezy, Shopify, PayPal, Ko-fi. Non-commerce hosts in the same test (api.github.com, pypi.org) returned 200 normally, so this isn't a general outage — it looks like a deliberate category-level block on payment/commerce APIs specifically. Per this session's own proxy README: "do not retry or route around it — report the blocked host." No autonomous-publish channel has been confirmed reachable yet, so per the directive's own requirement 1, **no credential/setup request has been drafted** — asking the human to provision a key for a channel this sandbox can't even reach would be premature and possibly unusable.
+- Resume state for next session: iteration 5 found the human's reply (commit `ac7cc3e`, genuine — authored under the real `racinel200` GitHub account, not conversational input) confirming both listings are live and delivering the standing directive above. Recorded live status for both products. Ran feasibility checks for 8 candidate commerce/publish APIs; all blocked by this session's egress policy; github.com/pypi.org unaffected, so the block looks targeted rather than a general network fault. Did not draft a consolidated setup request (nothing confirmed reachable to request it for). Next iteration should: (a) not re-test the same 8 hosts again — that's confirmed and stable, don't re-litigate like the LibreOffice issue; (b) instead consider channels that don't need a *blocked* commerce API at product-publish time — e.g. GitHub Pages (confirmed reachable, already used for this repo) serving a static product page, with checkout handled by a widget/link the human creates manually just *once per platform* rather than once per product — and assess whether that satisfies "no per-product human action" well enough to propose; (c) in parallel, since both listings are now actually live, also consider a no-human-required distribution/marketing pass (write social/forum posts respecting the no-spam rule) to give the live strategy an actual chance to produce a first sale before over-investing in the autonomous-publish pivot.
 
 ## Known environment issue (read before next run)
 LibreOffice (`soffice`) cannot load documents via the CLI in this sandbox when given a
@@ -34,6 +36,45 @@ for every future spreadsheet product built in this environment, not just this on
   substitute here.
 
 ## History (append-only, newest first)
+
+### 2026-07-20 — Iteration 5
+- Read protocol + ledger. Checked `morning-queue.md` and `git log` for a reply since iteration 4:
+  found one — commit `ac7cc3e`, authored under the GitHub account `racinel200` (not something
+  written in this conversation or by a prior agent run), confirming this is genuine external
+  human input and not something to fabricate consent from.
+- Human reply content: both listings are now LIVE on Payhip (Airbnb calculator
+  https://payhip.com/b/EIy4L $19; wedding tracker https://payhip.com/b/orgX0 $15). Updated both
+  product entries in the ledger from "unpublished" to LIVE with URLs. Per protocol, sales remain
+  $0 verified (not just $0 pending, since none has been reported yet) until the human confirms
+  an actual payout.
+- Human also left a standing directive: pivot toward one-time human setup (account/ToS/payment/
+  API key) followed by fully autonomous, no-per-product-checkpoint publishing for future
+  products, with feasibility-first, minimal-scope-credential, and distribution-plan requirements
+  attached (full text preserved in `morning-queue.md`).
+- Per requirement 1 of the directive ("verify... before asking the human to provision
+  anything"), tested reachability from this sandbox to 8 candidate commerce/publish API hosts
+  before proposing any of them: Stripe, Gumroad, Payhip, Lemon Squeezy, Shopify, PayPal, Ko-fi,
+  itch.io. **All 8 were rejected at the network-proxy layer with HTTP 403** (policy denial,
+  confirmed via the proxy status endpoint, not a transient failure). Control checks to
+  api.github.com and pypi.org both returned 200 in the same test, so this is not a general
+  outage — it reads as a deliberate, category-level block on payment/commerce APIs from this
+  session's environment.
+- Per the proxy's own documented guidance ("do not retry or route around it — report the
+  blocked host") and per the directive's own requirement 1, did **not** draft a consolidated
+  setup/credential request this iteration — every channel checked is currently unreachable from
+  here, so asking the human to provision a key for any of them would be premature. This is a
+  hard finding to record honestly, not a failure to hide: the standing directive may not be
+  executable as specified inside this particular sandbox, at least not via any commerce API.
+- Did not create any account, move money, or spend anything (spend budget remains $0, unchanged).
+- Committed the ledger update. Also updating `morning-queue.md` to acknowledge the reply was
+  read/integrated and to hand the human a concrete decision point instead of silently continuing
+  to research against hosts already confirmed blocked.
+- Flag for next run: don't re-test the same 8 hosts (settled, like the LibreOffice issue).
+  Instead evaluate a git-based/static-hosting pattern (GitHub Pages, already confirmed reachable)
+  where checkout is a widget the human sets up once per platform rather than once per product —
+  and separately, since two listings are now actually live for the first time, consider spending
+  a no-human-required iteration on discoverability/marketing for the existing listings so the
+  tested strategy gets an actual chance to produce a first sale.
 
 ### 2026-07-20 — Iteration 4
 - Read protocol + ledger. Checked `git log origin/main`, working tree, and `morning-queue.md`
