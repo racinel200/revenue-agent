@@ -1,9 +1,9 @@
 # Revenue Agent Ledger
 
-Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip); no-secret dry-run relay PROVEN end-to-end on GitHub Actions | Next action: awaiting human one-time setup (Lemon Squeezy account + API key + one GitHub Actions secret) — see morning-queue.md for exact copy-paste steps | Needs human: **yes — first real blocking task of this initiative.** File a Lemon Squeezy API key and add it as a GitHub Actions secret named `LEMONSQUEEZY_API_KEY`. Exact steps in morning-queue.md. Note again: that key cannot be scoped to products-only (Lemon Squeezy has no restricted-key feature) — the endpoint whitelist in the workflow is the real enforcement layer, and revoking the secret is the off-switch.
+Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip); no-secret dry-run relay PROVEN end-to-end on GitHub Actions; content-marketing site built and pushed, awaiting one Pages toggle to go live | Next action: awaiting human on TWO independent items — (1) Lemon Squeezy API key + GitHub Actions secret (blocks autonomous publishing of future products), (2) a 1-click GitHub Pages toggle (blocks the new discoverability site from being reachable) — see morning-queue.md for exact copy-paste steps on both | Needs human: **yes, two items, neither is identity/money for item 2.** (1) File a Lemon Squeezy API key and add it as a GitHub Actions secret named `LEMONSQUEEZY_API_KEY` — that key cannot be scoped to products-only (no restricted-key feature exists), so the workflow's endpoint whitelist is the real enforcement layer and revoking the secret is the off-switch. (2) Settings → Pages → Deploy from branch → main /docs — no identity or money involved, the sandbox's GitHub API access is proxy-restricted from doing this itself.
 
 ## State
-- Status: iteration 7 complete
+- Status: iteration 8 complete
 - Active strategy: **Micro digital product**, live on Payhip (unchanged, $0 verified sales). In parallel, executing the human-approved pivot to an autonomous publish relay (GitHub Actions executes commerce API calls on the human's behalf; the agent's sandbox never holds a credential).
 - Strategy graveyard: empty.
 - Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — **LIVE**: https://payhip.com/b/EIy4L — $19. Sales: $0 verified.
@@ -26,7 +26,15 @@ Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro d
   - Per the human's step 3, filed the single consolidated setup request in `morning-queue.md`: exact account (Lemon Squeezy), exact key type (their one API-key type — no scoped variant exists, per iteration 6), exact secret name (`LEMONSQUEEZY_API_KEY`), and exact copy-paste steps to create the key and add the GitHub Actions secret. Did **not** create any account or key myself — checkpoint, human hands only.
   - Explicitly did not touch the workflow to add a real API call — even after the secret exists, wiring it in is a separate, human-reviewed change per the protocol ("changes to the workflow itself are a human checkpoint"), flagged as the next gated step in `morning-queue.md` rather than done silently.
   - Did not spend anything (spend budget remains $0). Did not create any marketplace/platform account.
-- Resume state for next session: **blocked on human** for the first time in this initiative — check `git log` / `morning-queue.md` for the human having added the `LEMONSQUEEZY_API_KEY` secret and confirmed here. If still no reply, do NOT re-ask in a new form (iteration 3/4's lesson) — instead spend the iteration on a no-human-required task: discoverability/marketing push for the two live Payhip listings (still $0 verified sales after 7 iterations — the tested strategy hasn't had a real distribution attempt yet), per the flag iteration 5 already left and never acted on. If the human *has* replied with the secret added: next iteration drafts the actual workflow diff that adds the real Lemon Squeezy API call (still gated on a human-reviewed PR/approval before it runs for real, per protocol) — do not have that diff auto-merge or auto-run against the live secret without a final explicit go-ahead recorded in `morning-queue.md`.
+- Resume state after iteration 7: **blocked on human** for the first time in this initiative — check `git log` / `morning-queue.md` for the human having added the `LEMONSQUEEZY_API_KEY` secret and confirmed here. If still no reply, do NOT re-ask in a new form (iteration 3/4's lesson) — instead spend the iteration on a no-human-required task: discoverability/marketing push for the two live Payhip listings (still $0 verified sales after 7 iterations — the tested strategy hasn't had a real distribution attempt yet), per the flag iteration 5 already left and never acted on. If the human *has* replied with the secret added: next iteration drafts the actual workflow diff that adds the real Lemon Squeezy API call (still gated on a human-reviewed PR/approval before it runs for real, per protocol) — do not have that diff auto-merge or auto-run against the live secret without a final explicit go-ahead recorded in `morning-queue.md`.
+- **Iteration 8 — no-human-required discoverability push, DONE:**
+  - Checked for a human reply since iteration 7 first: shallow-cloned `origin/main`, HEAD was still exactly `36f9e7a` (iteration 7's own last commit) — confirms no new commit landed, so no secret-added confirmation to integrate. Per iteration 7's own resume plan, did not re-ask about Lemon Squeezy in a new form; moved to the discoverability task instead.
+  - Built `docs/index.html` (hub) + `docs/airbnb-str-roi-calculator/index.html` + `docs/wedding-budget-planner/index.html`: genuine plain-English explainers (cap rate / cash-on-cash / break-even-occupancy math for the STR guide; the "actual spent vs. planned, balance due, % of budget" argument for the wedding guide) each ending in a real, disclosed CTA linking to the matching live Payhip checkout (`https://payhip.com/b/EIy4L`, `https://payhip.com/b/orgX0`). Added `robots.txt` and `sitemap.xml`. No fabricated statistics, no fake reviews, no undisclosed affiliation claims — checked this against the legitimacy constraints before writing, since a content-marketing push is exactly the kind of thing that can slide into deceptive SEO spam if done carelessly. This is a GitHub Pages site, meant to be served from `/docs` on `main`.
+  - Tried to enable GitHub Pages myself first rather than assuming it needs a human: called `GET https://api.github.com/repos/racinel200/revenue-agent/pages` directly — rejected by the sandbox's own proxy with "Access to this GitHub API path is not permitted through this proxy" (403). Confirms the sandbox's GitHub API access is deliberately scoped to the existing relay flow (reading `publish-results/*.json` via api.github.com) and does not extend to repo-admin actions like Pages config. This is not a Checkpoint under the protocol's definition (no identity, no money, no ToS, nothing irreversible — it's a single dashboard toggle) but it does require human hands given the sandbox's own restriction, so queued it in `morning-queue.md` as a clearly separate, lower-friction ask from the Lemon Squeezy one, so the human can act on either independently.
+  - Did not touch the Lemon Squeezy relay work at all this iteration (workflow, validator, schema untouched) — that thread stays exactly where iteration 7 left it, waiting on its own separate checkpoint.
+  - Did not create any account, spend anything, post to any external platform, or claim any affiliation with Airbnb/VRBO/any wedding platform (both guide pages explicitly disclaim affiliation in their footers). Spend budget remains $0.
+  - Considered and rejected drafting Reddit/forum self-promo posts as an alternative: most of the relevant subreddits (r/AirBnBHosts, r/realestateinvesting, r/weddingplanning) restrict or ban vendor self-promotion outright, and posting itself would require the human's personal account/identity — a much higher-friction ask than a single Pages toggle, and riskier against the "no spam" legitimacy constraint if done carelessly. A genuine content site the human can decide whether to further promote (Pinterest, newsletters, etc.) felt like the safer first move; did not build those follow-on channels this iteration to keep the checkpoint list short.
+- Resume state for next session: **two independent, unrelated blockers now** — check `git log` / `morning-queue.md` for progress on *either*: (a) the Lemon Squeezy secret (iteration 7's ask, unchanged), (b) the GitHub Pages toggle (iteration 8's ask, new). They don't depend on each other — the human could do one, both, or neither. If neither has moved: do not re-ask either in a new form a second time; instead look for a third genuinely independent no-human-required action (e.g., draft — but do not post — Pinterest pin copy for the wedding tracker, since Pinterest is a much stronger organic-discovery fit for that niche than Reddit and doesn't carry the same self-promo-ban risk, though posting it still needs the human's own account). If the Pages toggle *has* landed: verify the site is actually reachable at `https://racinel200.github.io/revenue-agent/` (read-only HTTP check, no account needed) before reporting it as live. If the Lemon Squeezy secret *has* landed: proceed exactly as iteration 7 specified — draft the workflow diff adding the real API call, gated on a separate explicit human go-ahead before it runs for real.
 
 ## Known environment issue (read before next run)
 LibreOffice (`soffice`) cannot load documents via the CLI in this sandbox when given a
@@ -51,6 +59,43 @@ for every future spreadsheet product built in this environment, not just this on
   substitute here.
 
 ## History (append-only, newest first)
+
+### 2026-07-20 — Iteration 8
+- Read protocol + ledger. Checked `git log` for a human reply since iteration 7: HEAD was still
+  exactly `36f9e7a` (iteration 7's own last commit) — no new commit, so still no confirmation of
+  the Lemon Squeezy secret being added.
+- Per iteration 7's own resume-state plan, did not re-ask about Lemon Squeezy in a new form.
+  Spent the iteration on the no-human-required task it named: a discoverability/marketing push
+  for the two live Payhip listings, which still had zero real distribution attempt after 7
+  iterations.
+- Built a small GitHub Pages content site under `docs/`: a hub page plus two genuine how-to
+  guides (Airbnb/STR ROI math — cap rate, cash-on-cash, break-even occupancy, formulas shown;
+  wedding budget/vendor-tracking principles — why a flat category list fails and what fixes it),
+  each ending in a disclosed link to the corresponding live Payhip checkout. Added `robots.txt`
+  and `sitemap.xml`. Checked the content against the legitimacy constraints before writing —
+  no fabricated stats, no fake reviews, explicit non-affiliation disclaimers — since a
+  marketing push is exactly where "no spam / no deception" is easiest to violate by accident.
+- Tried enabling GitHub Pages myself before assuming it needed a human: a direct call to the
+  repo's `/pages` GitHub API endpoint was rejected by the sandbox's own proxy (403, "not
+  permitted through this proxy"). Confirmed the sandbox's GitHub API access is scoped to the
+  existing relay read flow only, not repo-admin actions. Queued the one-time Pages toggle in
+  `morning-queue.md` as a separate, lower-friction ask from the Lemon Squeezy one (no identity,
+  no money, not a Checkpoint under the protocol's own definition — just gated by the sandbox's
+  API restriction).
+- Considered drafting Reddit/forum self-promo posts as an alternative distribution channel and
+  rejected it: the relevant subreddits largely restrict/ban vendor self-promotion, and posting
+  would require the human's own account/identity anyway — higher friction and more legitimacy
+  risk than one Pages toggle. Did not build a Pinterest push either this iteration, to keep this
+  round's ask list short; flagged as the next candidate if both current blockers stay unmoved.
+- Did not touch the Lemon Squeezy relay work (schema/validator/workflow untouched this
+  iteration). Did not create any account, spend anything, or post anything to any external
+  platform. Spend budget remains $0.
+- Committed 3 times this iteration (the three docs/ site files + robots/sitemap as one commit,
+  the morning-queue.md update as a second, this ledger update as the third), pushing
+  immediately after each.
+- Flag for next run: see "Resume state for next session" above — two independent blockers now
+  (Lemon Squeezy secret, Pages toggle), track them separately since the human may resolve either
+  without the other.
 
 ### 2026-07-20 — Iteration 7
 - Read protocol + ledger. `git log` showed no new human commit since iteration 6 (still at
