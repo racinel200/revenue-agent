@@ -1,72 +1,51 @@
 # Morning Queue — human checkpoints
 
-## NEW — iteration 5 decision needed (one question)
+## HUMAN DECISION — 2026-07-20 (answers your iteration-5 question)
 
-Your reply below was read and integrated (both listings recorded live in the ledger,
-sales tracked as $0-verified-until-payout-confirmed). Acted on the standing directive's
-requirement 1 (verify feasibility before asking you to provision anything) by testing
-whether this sandbox can even reach the APIs an autonomous-publish pivot would need.
+**Answer: (a) — pursue the autonomous-publish pivot.** For the record: the human's advisor
+recommended (b); the human heard that case and chose (a). The human accepts the trade-off
+that agent-authored listings will go live under the human's identity without pre-review,
+mitigated by the constraints below.
 
-**Result: every commerce/payment API host tested is blocked by this session's own network
-policy** — Stripe, Gumroad, Payhip, Lemon Squeezy, Shopify, PayPal, Ko-fi, and itch.io all
-returned HTTP 403 at the proxy layer (confirmed via the proxy's own status endpoint, so this
-is a real policy denial, not a flaky connection). For comparison, api.github.com and pypi.org
-worked fine in the same test — so this looks like a deliberate block on payment/commerce
-APIs specifically, not a general outage. Per this session's own proxy guidance, blocked hosts
-like these are meant to be reported, not routed around.
+**Approved architecture: EXECUTION RELAY via GitHub Actions.** Do not route around your
+sandbox's network block — you don't need to. Your sandbox never touches a commerce API and
+never sees a credential. Instead:
 
-Practical effect: I can't yet confirm ANY channel that would let the agent create and publish
-a product end-to-end without a human touching each listing — so per requirement 1 of your
-directive, I haven't asked you to create an account or generate an API key for anything,
-since I can't confirm the agent could actually use it from here.
+1. You author structured publish-intents as files (e.g. `publish-requests/*.json`) and
+   commit them.
+2. A GitHub Actions workflow — which runs on GitHub's infrastructure with unrestricted
+   network, triggered by your commits — validates each intent and executes the API calls.
+3. The API credential lives ONLY in GitHub Actions Secrets: never in the repo, never
+   readable from your sandbox. You read results via api.github.com (confirmed reachable).
 
-**One-line answer would help most:**
-- **(a)** This environment's network allowlist is something you (or whoever set it up) can
-  widen — if so, tell me which single host to prioritize (e.g. Stripe) and I'll build the
-  full proposal once it's reachable.
-- **(b)** The block is intentional/out of your control (e.g. an org-level guardrail against
-  agents touching payment APIs) — if so, the autonomous end-to-end pivot likely isn't
-  buildable in this sandbox, and I should instead propose a lighter-weight *reachable*
-  pattern (e.g. static product pages on GitHub Pages, which IS reachable, with a checkout
-  widget you set up once per platform rather than once per product) — let me know if that
-  middle ground is worth pursuing, or if you'd rather I just keep doing per-product listing
-  prep and you keep doing the ~10-min manual publish, now that it's proven to work (both
-  listings went live from exactly that flow).
-- **(c)** Something else / not now — totally fine, I'll hold state and keep the two live
-  listings as the active strategy without pushing the pivot further.
+The workflow file is the constitution of this system and MUST enforce, deterministically:
+- Endpoint whitelist: product / price / payment-link / listing creation and updates ONLY.
+  No refund, payout, transfer, account, or key-management endpoints, ever.
+- Price bounds: $5–$49 per product.
+- Rate cap: max 3 new products per day.
+- Full logging: every executed intent appears in the Actions log and as a result file
+  committed back to the repo.
+The human reviews and approves the workflow file once; after that, changes to the workflow
+itself are a human checkpoint (never modify it silently — flag proposed changes in this file).
 
-## HUMAN REPLY — 2026-07-20 (read first, then integrate into ledger) — ACKNOWLEDGED, see above
+**Sequencing for your next iterations:**
+1. CHANNEL RESEARCH: pick the platform. Hard requirements: real API support for creating
+   products AND delivering the digital file to the buyer, payouts to the human's account.
+   Verify API docs claims carefully.
+2. DRY-RUN FIRST (your feasibility rule still binds): build the full relay skeleton with a
+   NO-SECRET echo workflow — intent file in, workflow triggers, validated, dummy result
+   committed back, you read it from your sandbox. Prove the whole loop before requesting
+   anything.
+3. THEN file the single consolidated setup request here: exact account, exact key type,
+   exact minimal scopes, exact secret name. The human's one-time setup is: create restricted
+   key + add one GitHub Actions secret. Revoking that secret is the off-switch; it must
+   remain sufficient to halt all publishing.
 
-Answer to your iteration-4 question: **(d) — the per-product checkpoint model is the blocker.**
+Both Payhip listings stay live throughout. All prior protocol rules and the standing
+directive below remain in force.
 
-Both existing products ARE now LIVE — the human published them this morning:
-- Airbnb & STR ROI Calculator — https://payhip.com/b/EIy4L — $19 on Payhip
-- Wedding Budget & Vendor Payment Tracker — https://payhip.com/b/orgX0 — $15 on Payhip
+## STANDING DIRECTIVE (unchanged, from the human)
 
-Record both in the ledger. Payment details are connected on the Payhip account. Per protocol,
-treat any sale as PENDING until the human confirms the payout actually landed.
-
-## STANDING DIRECTIVE (new, from the human)
-
-Pivot strategy to this shape: the human performs ONE-TIME setup (account creation, ToS,
-payment wiring, API key generation — anything touching identity or money), and after that
-the agent can create AND publish new products end-to-end automatically, with no per-product
-human action. The two Payhip listings stay live, but Payhip's manual upload flow does not
-satisfy this requirement going forward.
-
-Requirements for your proposal:
-1. FEASIBILITY FIRST: verify from your own sandbox that you can actually reach and drive the
-   publish mechanism (API, CLI, git-based deploy, etc.) before asking the human to provision
-   anything. Dry-run it. Do not request setup for a channel you have not confirmed you can use.
-2. ONE CONSOLIDATED SETUP REQUEST: exact account to create, exact key to generate with exact
-   minimal scopes, exactly where to place it so future runs can use it. Least privilege,
-   revocable — the human's ability to kill the key IS the off-switch and must stay real.
-3. ALL PROTOCOL RULES STILL BIND: legitimacy constraints, honest product claims, no deception,
-   ledger discipline, sales pending until human-verified payout.
-4. CREDENTIAL HANDLING: state the storage mechanism explicitly and flag its risks in the
-   ledger before the human provisions anything.
-5. DISTRIBUTION COUNTS: an auto-published product nobody sees earns $0. Discoverability or
-   marketing must be part of the strategy, not an afterthought.
-
-Next runs: research candidate channels, verify sandbox feasibility, then write the single
-consolidated setup request into this file. That request becomes the human's next checkpoint.
+One-time human setup (identity/money), then autonomous end-to-end publishing. Feasibility
+first; one consolidated setup request; least-privilege revocable credentials; legitimacy
+constraints and ledger discipline always; distribution counts — an unseen product earns $0.
