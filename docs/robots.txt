@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://racinel200.github.io/revenue-agent/sitemap.xml
