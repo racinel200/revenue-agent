@@ -1,17 +1,21 @@
 # Revenue Agent Ledger
 
-Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings now LIVE on Payhip); researching autonomous-publish pivot per new standing directive | Next action: human decides how to handle the confirmed network-policy block on every commerce API tested (see iteration 5) — allowlist one specific host, or accept the pivot isn't feasible in this sandbox and keep the (now lighter, batched) per-listing checkpoint model | Needs human: 1) confirm/paste actual payout amounts once Payhip reports a sale (sales are PENDING, not verified, until then), 2) a decision on the network-policy question below so research can target a channel that's actually reachable instead of guessing further
+Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip); building autonomous-publish relay per human's approved architecture (execution via GitHub Actions, not the sandbox) | Next action: build the NO-SECRET dry-run relay skeleton (intent file → Actions workflow → validated echo result committed back) to prove the loop before any credential request | Needs human: nothing blocking yet — no credential/setup request has been filed. FYI only: Lemon Squeezy's public docs show no evidence of scoped/restricted API keys (see iteration 6) — read this before approving the eventual workflow file.
 
 ## State
-- Status: iteration 5 complete
-- Active strategy: **Micro digital product**, now live — spreadsheet templates sold on Payhip (human-owned account). A new standing directive (below) asks the agent to research a pivot to fully autonomous end-to-end publishing; that research is in progress, not yet actionable.
-- Strategy graveyard: empty. The manual-checkpoint marketplace strategy is no longer untested — both listings are live for the first time (iteration 5), so the next real signal is whether either sells.
-- Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — Airbnb/STR ROI & cash flow calculator. **LIVE**: https://payhip.com/b/EIy4L — $19. Published by the human 2026-07-20. Sales: $0 verified (none reported yet).
-- Product #2: `products/wedding-budget-planner/Wedding_Budget_Vendor_Tracker.xlsx` — wedding budget + vendor/payment tracker. **LIVE**: https://payhip.com/b/orgX0 — $15. Published by the human 2026-07-20. Sales: $0 verified (none reported yet).
+- Status: iteration 6 complete
+- Active strategy: **Micro digital product**, live on Payhip (unchanged, $0 verified sales). In parallel, executing the human-approved pivot to an autonomous publish relay (GitHub Actions executes commerce API calls on the human's behalf; the agent's sandbox never holds a credential).
+- Strategy graveyard: empty.
+- Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — **LIVE**: https://payhip.com/b/EIy4L — $19. Sales: $0 verified.
+- Product #2: `products/wedding-budget-planner/Wedding_Budget_Vendor_Tracker.xlsx` — **LIVE**: https://payhip.com/b/orgX0 — $15. Sales: $0 verified.
 - Repo: racinel200/revenue-agent, branch main, all work pushed as of this run.
-- Standing directive (from human, via commit `ac7cc3e` on `main`, 2026-07-20 — see `morning-queue.md`): pivot toward the human doing ONE-TIME setup (account/ToS/payment/API key) after which the agent publishes new products end-to-end with no per-product human action. Requires: feasibility confirmed before any setup is requested, one consolidated minimal-scope setup ask, all existing protocol rules still bind, explicit credential-storage/risk statement, and a distribution/discoverability plan (a listing nobody sees earns $0).
-- Feasibility finding (iteration 5, see History): **every commerce/payment API host tested from this sandbox is blocked at the network-proxy level** (403 policy denial, confirmed via `$HTTPS_PROXY/__agentproxy/status`) — Stripe, Gumroad, Payhip, Lemon Squeezy, Shopify, PayPal, Ko-fi. Non-commerce hosts in the same test (api.github.com, pypi.org) returned 200 normally, so this isn't a general outage — it looks like a deliberate category-level block on payment/commerce APIs specifically. Per this session's own proxy README: "do not retry or route around it — report the blocked host." No autonomous-publish channel has been confirmed reachable yet, so per the directive's own requirement 1, **no credential/setup request has been drafted** — asking the human to provision a key for a channel this sandbox can't even reach would be premature and possibly unusable.
-- Resume state for next session: iteration 5 found the human's reply (commit `ac7cc3e`, genuine — authored under the real `racinel200` GitHub account, not conversational input) confirming both listings are live and delivering the standing directive above. Recorded live status for both products. Ran feasibility checks for 8 candidate commerce/publish APIs; all blocked by this session's egress policy; github.com/pypi.org unaffected, so the block looks targeted rather than a general network fault. Did not draft a consolidated setup request (nothing confirmed reachable to request it for). Next iteration should: (a) not re-test the same 8 hosts again — that's confirmed and stable, don't re-litigate like the LibreOffice issue; (b) instead consider channels that don't need a *blocked* commerce API at product-publish time — e.g. GitHub Pages (confirmed reachable, already used for this repo) serving a static product page, with checkout handled by a widget/link the human creates manually just *once per platform* rather than once per product — and assess whether that satisfies "no per-product human action" well enough to propose; (c) in parallel, since both listings are now actually live, also consider a no-human-required distribution/marketing pass (write social/forum posts respecting the no-spam rule) to give the live strategy an actual chance to produce a first sale before over-investing in the autonomous-publish pivot.
+- Standing directive (human, commit `ac7cc3e`) + approved architecture (human, commit `d57df25`, verified authored by the real `racinel200` GitHub account — see `morning-queue.md` for full text): EXECUTION RELAY via GitHub Actions. Agent commits `publish-requests/*.json` intents; a human-approved GitHub Actions workflow (holding the only credential, in Actions Secrets) validates against an endpoint whitelist (product/price/payment-link/listing only — no refund/payout/transfer/account/key-management) and executes. Sequencing required by the human: (1) channel research, (2) no-secret dry-run of the full relay loop, (3) only then a single consolidated setup request.
+- **Iteration 6 — channel research (step 1 of the human's sequencing), DONE:**
+  - **Gumroad: ruled out.** Product creation via API is not supported — the create-product endpoint returns 404; product creation is dashboard-only. Confirmed via an open GitHub issue (antiwork/gumroad#4019, filed 2026) requesting this as a future feature. File upload API exists but is useless without product creation.
+  - **Lemon Squeezy: selected.** Full REST API for Products, Variants, and Checkouts (`POST /v1/checkouts`, variant/price control via `product_options.enabled_variants`). Digital files (up to 5GB per product) attach to variants and are delivered to buyers automatically post-purchase — no manual fulfillment step. Payouts are Lemon Squeezy's own merchant-of-record flow (bank wire or PayPal, twice monthly) — no separate Stripe Connect setup needed. This is currently the only candidate found with API support for all three required legs: product creation, digital delivery, and payout to the human's account.
+  - **Safety-relevant finding, flag before setup:** searched and fetched Lemon Squeezy's public API docs for evidence of scoped/restricted API keys (e.g. a key limited to products/checkouts, excluding payout/refund/account endpoints). Found none — the docs describe API keys as live/test-mode credentials valid for a year, with no mention of granular scopes. **This means the "least-privilege" requirement in the standing directive cannot be satisfied at the key level** — a Lemon Squeezy API key, once issued, likely has full account access regardless of what the GitHub Actions workflow chooses to call. The endpoint whitelist + rate cap + logging in the approved architecture would be the *only* enforcement layer, not a backstop to key-level restriction. This doesn't block the plan (the workflow-level whitelist was always meant to be doing this work), but the human should know the credential itself is not narrowly scoped before approving the workflow file, since revocation (the stated off-switch) is doing more safety work than a scoped key would. Did not attempt to verify this claim by creating a Lemon Squeezy account or key — that's still a human checkpoint and out of scope for research.
+  - Did not re-test the 8 commerce hosts blocked from the sandbox (settled in iteration 5, not relitigated) — moot anyway, since the relay design means the sandbox never calls these APIs directly.
+- Resume state for next session: channel is picked (Lemon Squeezy). Per the human's step 2, next iteration should build the **no-secret dry-run skeleton**: a `publish-requests/` intent schema (JSON: product name, price, description, file ref), a `.github/workflows/` file that triggers on new files under `publish-requests/`, validates the intent against the whitelist/price-bounds/rate-cap rules, and — since no secret exists yet — echoes a dummy "would have called POST /v1/products with {...}" result back to a `publish-results/` file instead of calling the real API. Prove intent-in → validate → result-out completely before drafting any setup/credential request. Do not add a real Lemon Squeezy API call to the workflow until the human has provisioned and approved a secret (step 3) — the dry-run must stay secret-free by construction, not just by discipline, so an early/leaked workflow run can't accidentally hit a real endpoint.
 
 ## Known environment issue (read before next run)
 LibreOffice (`soffice`) cannot load documents via the CLI in this sandbox when given a
@@ -36,6 +40,34 @@ for every future spreadsheet product built in this environment, not just this on
   substitute here.
 
 ## History (append-only, newest first)
+
+### 2026-07-20 — Iteration 6
+- Read protocol + ledger. Checked `git log` for a human reply since iteration 5: found commit
+  `d57df25`, authored under the real `racinel200` GitHub account (not conversational input),
+  delivering the human's decision on the iteration-5 question (pursue the autonomous-publish
+  pivot, option (a)) and the approved architecture: an execution relay via GitHub Actions, so the
+  sandbox's commerce-API network block (iteration 5) is now moot — the sandbox never calls those
+  APIs, GitHub Actions does, using a credential the sandbox never holds.
+- Per the human's required sequencing, did step 1: channel research. Compared Gumroad and Lemon
+  Squeezy against the human's hard requirement (API support for product creation + digital
+  delivery + payout to the human's account). Gumroad ruled out (no product-creation API, confirmed
+  via open upstream GitHub issue). Lemon Squeezy selected (full API coverage for all three legs).
+- Went a step further than "does the API exist" and checked whether Lemon Squeezy API keys can be
+  scoped down (least-privilege, per the standing directive's explicit requirement). Public docs
+  show no evidence of scoped keys — recorded as a flag for the human, not a blocker: it means the
+  GitHub Actions workflow's own whitelist/rate-cap/logging is the sole enforcement layer, and
+  secret revocation is doing more of the safety work than a narrowly-scoped key would have.
+- Did not create any account, key, or workflow with real API calls; did not spend anything; did
+  not file a setup/credential request (per the human's own sequencing, that's step 3, gated on
+  step 2's dry-run first). Spend budget remains $0.
+- Committed the ledger update. Also updating `morning-queue.md` — no new blocking task, but the
+  API-key-scoping finding is logged there for the human to see before eventually approving a
+  workflow file.
+- Flag for next run: build the no-secret dry-run relay skeleton (intent JSON in → Actions
+  workflow validates → dummy echo result committed back, read from the sandbox via
+  api.github.com). Keep it structurally incapable of a real API call (no secret referenced in the
+  workflow at all yet) rather than just relying on the workflow not doing so — that's a stronger
+  guarantee for a system that will run unattended.
 
 ### 2026-07-20 — Iteration 5
 - Read protocol + ledger. Checked `morning-queue.md` and `git log` for a reply since iteration 4:
