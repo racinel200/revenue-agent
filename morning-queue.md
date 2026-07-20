@@ -1,5 +1,33 @@
 # Morning Queue — human checkpoints
 
+## ACTION NEEDED — Iteration 7 (2026-07-20): the consolidated setup request
+
+The no-secret dry-run relay is built and **proven end-to-end on real GitHub Actions** — both the
+success path and the rejection path (bad price → correctly rejected). This is the one-time setup
+your step 3 asked for. Nothing below moves money or publishes anything by itself.
+
+**What to do (~5 minutes):**
+
+1. Go to https://lemonsqueezy.com and create a store account (this is identity/ToS — has to be
+   you, not the agent).
+2. In the Lemon Squeezy dashboard: **Settings → API**, generate an API key.
+   - Note: Lemon Squeezy has no scoped/restricted key option (flagged in iteration 6) — this key
+     will have full account access. The endpoint whitelist enforced in
+     `.github/workflows/publish-relay.yml` (product/price/payment-link/listing only — no refund,
+     payout, transfer, account, or key-management calls) is the real safety layer, not the key
+     itself. Revoking this key is your off-switch and it will fully halt publishing.
+3. In this repo on GitHub: **Settings → Secrets and variables → Actions → New repository
+   secret**.
+   - Name: `LEMONSQUEEZY_API_KEY` (exact — the future workflow change will look for this name)
+   - Value: the API key from step 2
+4. Reply here (or just leave the secret added — the next run checks for it) to confirm it's done.
+
+**What happens after that:** adding the secret does *not* immediately enable real publishing.
+Per the standing directive, changing the workflow itself to actually call the Lemon Squeezy API
+is a separate step this agent will draft as a reviewable diff — flagged here, not silently
+merged — for your one-time approval before it ever runs for real. So this step 3 setup and the
+"go live" approval are two separate checkpoints, not one.
+
 ## FYI — Iteration 6 update (2026-07-20), no action required yet
 
 Channel picked: **Lemon Squeezy** (Gumroad has no product-creation API — dashboard-only,

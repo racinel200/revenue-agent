@@ -1,9 +1,9 @@
 # Revenue Agent Ledger
 
-Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip); building autonomous-publish relay per human's approved architecture (execution via GitHub Actions, not the sandbox) | Next action: build the NO-SECRET dry-run relay skeleton (intent file → Actions workflow → validated echo result committed back) to prove the loop before any credential request | Needs human: nothing blocking yet — no credential/setup request has been filed. FYI only: Lemon Squeezy's public docs show no evidence of scoped/restricted API keys (see iteration 6) — read this before approving the eventual workflow file.
+Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip); no-secret dry-run relay PROVEN end-to-end on GitHub Actions | Next action: awaiting human one-time setup (Lemon Squeezy account + API key + one GitHub Actions secret) — see morning-queue.md for exact copy-paste steps | Needs human: **yes — first real blocking task of this initiative.** File a Lemon Squeezy API key and add it as a GitHub Actions secret named `LEMONSQUEEZY_API_KEY`. Exact steps in morning-queue.md. Note again: that key cannot be scoped to products-only (Lemon Squeezy has no restricted-key feature) — the endpoint whitelist in the workflow is the real enforcement layer, and revoking the secret is the off-switch.
 
 ## State
-- Status: iteration 6 complete
+- Status: iteration 7 complete
 - Active strategy: **Micro digital product**, live on Payhip (unchanged, $0 verified sales). In parallel, executing the human-approved pivot to an autonomous publish relay (GitHub Actions executes commerce API calls on the human's behalf; the agent's sandbox never holds a credential).
 - Strategy graveyard: empty.
 - Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — **LIVE**: https://payhip.com/b/EIy4L — $19. Sales: $0 verified.
@@ -16,6 +16,17 @@ Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro d
   - **Safety-relevant finding, flag before setup:** searched and fetched Lemon Squeezy's public API docs for evidence of scoped/restricted API keys (e.g. a key limited to products/checkouts, excluding payout/refund/account endpoints). Found none — the docs describe API keys as live/test-mode credentials valid for a year, with no mention of granular scopes. **This means the "least-privilege" requirement in the standing directive cannot be satisfied at the key level** — a Lemon Squeezy API key, once issued, likely has full account access regardless of what the GitHub Actions workflow chooses to call. The endpoint whitelist + rate cap + logging in the approved architecture would be the *only* enforcement layer, not a backstop to key-level restriction. This doesn't block the plan (the workflow-level whitelist was always meant to be doing this work), but the human should know the credential itself is not narrowly scoped before approving the workflow file, since revocation (the stated off-switch) is doing more safety work than a scoped key would. Did not attempt to verify this claim by creating a Lemon Squeezy account or key — that's still a human checkpoint and out of scope for research.
   - Did not re-test the 8 commerce hosts blocked from the sandbox (settled in iteration 5, not relitigated) — moot anyway, since the relay design means the sandbox never calls these APIs directly.
 - Resume state for next session: channel is picked (Lemon Squeezy). Per the human's step 2, next iteration should build the **no-secret dry-run skeleton**: a `publish-requests/` intent schema (JSON: product name, price, description, file ref), a `.github/workflows/` file that triggers on new files under `publish-requests/`, validates the intent against the whitelist/price-bounds/rate-cap rules, and — since no secret exists yet — echoes a dummy "would have called POST /v1/products with {...}" result back to a `publish-results/` file instead of calling the real API. Prove intent-in → validate → result-out completely before drafting any setup/credential request. Do not add a real Lemon Squeezy API call to the workflow until the human has provisioned and approved a secret (step 3) — the dry-run must stay secret-free by construction, not just by discipline, so an early/leaked workflow run can't accidentally hit a real endpoint.
+- **Iteration 7 — no-secret dry-run relay, DONE (human's step 2 complete):**
+  - Built `publish-requests/SCHEMA.md` (intent format: `id`/`type`/`platform`/`product`; whitelist = `product_create`/`price_update`/`payment_link_create`/`listing_update`; price bounds $5–$49; rate cap 3 `product_create`/UTC day; hard rejection of any field named `api_key`/`secret`/`token`/`credential`/`password` at any nesting depth).
+  - Built `.github/scripts/validate_and_echo.py`: pure validation + echo, zero network calls, zero secret/env reads. Unit-tested locally first (good intent, out-of-bounds price, non-whitelisted type, smuggled `api_key` field, and a 4-in-a-day rate-cap trip) — all five cases behaved correctly before anything touched the real repo.
+  - Built `.github/workflows/publish-relay.yml`: triggers on push to `publish-requests/**.json`, runs the validator, commits any new `publish-results/*.json` back using the default `GITHUB_TOKEN` (repo-scoped, auto-provided by Actions — not a commerce credential). The workflow file contains **no secret reference of any kind** — structurally incapable of a real API call, per the human's requirement.
+  - **Proved the loop live, both paths, on actual GitHub Actions (not just locally):**
+    - Positive: committed `publish-requests/dryrun-test-0001.json` (valid `product_create`, $19) → within 10s the relay committed `publish-results/dryrun-test-0001.json` with `status: "validated_dry_run"` and the correct `would_call: "lemonsqueezy: POST /v1/products"`, authored by the `revenue-agent-relay` bot identity, no human/secret involved.
+    - Negative: committed `publish-requests/dryrun-test-0002-badprice.json` (`price_usd: 999`) → within 20s got back `status: "rejected"`, `reasons: ["price_usd 999 outside allowed bounds $5-$49"]`. Confirms the workflow enforces its own rules under real Actions execution, not just in the local unit test.
+  - Per the human's step 3, filed the single consolidated setup request in `morning-queue.md`: exact account (Lemon Squeezy), exact key type (their one API-key type — no scoped variant exists, per iteration 6), exact secret name (`LEMONSQUEEZY_API_KEY`), and exact copy-paste steps to create the key and add the GitHub Actions secret. Did **not** create any account or key myself — checkpoint, human hands only.
+  - Explicitly did not touch the workflow to add a real API call — even after the secret exists, wiring it in is a separate, human-reviewed change per the protocol ("changes to the workflow itself are a human checkpoint"), flagged as the next gated step in `morning-queue.md` rather than done silently.
+  - Did not spend anything (spend budget remains $0). Did not create any marketplace/platform account.
+- Resume state for next session: **blocked on human** for the first time in this initiative — check `git log` / `morning-queue.md` for the human having added the `LEMONSQUEEZY_API_KEY` secret and confirmed here. If still no reply, do NOT re-ask in a new form (iteration 3/4's lesson) — instead spend the iteration on a no-human-required task: discoverability/marketing push for the two live Payhip listings (still $0 verified sales after 7 iterations — the tested strategy hasn't had a real distribution attempt yet), per the flag iteration 5 already left and never acted on. If the human *has* replied with the secret added: next iteration drafts the actual workflow diff that adds the real Lemon Squeezy API call (still gated on a human-reviewed PR/approval before it runs for real, per protocol) — do not have that diff auto-merge or auto-run against the live secret without a final explicit go-ahead recorded in `morning-queue.md`.
 
 ## Known environment issue (read before next run)
 LibreOffice (`soffice`) cannot load documents via the CLI in this sandbox when given a
@@ -40,6 +51,36 @@ for every future spreadsheet product built in this environment, not just this on
   substitute here.
 
 ## History (append-only, newest first)
+
+### 2026-07-20 — Iteration 7
+- Read protocol + ledger. `git log` showed no new human commit since iteration 6 (still at
+  `f105ad5`) — nothing to integrate, proceeded on the resume-state plan as written.
+- Built the full no-secret dry-run relay per the human's step 2: intent schema
+  (`publish-requests/SCHEMA.md`), a pure-Python validator with zero network/secret access
+  (`.github/scripts/validate_and_echo.py`), and a GitHub Actions workflow
+  (`.github/workflows/publish-relay.yml`) that references no secret anywhere in its text.
+- Unit-tested the validator locally first (good intent; over-bound price; non-whitelisted type;
+  smuggled `api_key` field; 4th-in-a-day rate-cap trip) — all 5 cases correct — before letting
+  anything run against the real repo.
+- Pushed two real test intents and watched the live GitHub Actions relay handle both: a valid
+  `product_create` came back `validated_dry_run` with the correct echoed endpoint in ~10s; a
+  $999 `product_create` came back `rejected` with the price-bounds reason in ~20s. Both were
+  committed back by the workflow itself (`revenue-agent-relay` identity via the default,
+  repo-scoped `GITHUB_TOKEN`) — no human, no commerce credential, involved at any point.
+- Per the human's step 3 (now unblocked since step 2 is proven), filed the single consolidated
+  setup request in `morning-queue.md`: create a Lemon Squeezy account, generate its one API-key
+  type (no scoped variant exists — flagged again), add it as a GitHub Actions secret named
+  `LEMONSQUEEZY_API_KEY`. This is the first genuinely blocking human task this initiative has
+  produced since the pivot.
+- Did not touch the workflow to wire in a real API call (that remains a separate, human-reviewed
+  change even after the secret exists, per protocol). Did not create any account, spend anything,
+  or move money — spend budget remains $0.
+- Committed 5 times this iteration (schema, validator, workflow, positive test intent, negative
+  test intent), each pushed immediately; the relay's own 2 result commits came from GitHub
+  Actions, not this sandbox. Committing this ledger + morning-queue update now as the final commit
+  of the iteration.
+- Flag for next run: see "Resume state for next session" above — branches on whether the human
+  has added the secret yet.
 
 ### 2026-07-20 — Iteration 6
 - Read protocol + ledger. Checked `git log` for a human reply since iteration 5: found commit
