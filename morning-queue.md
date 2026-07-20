@@ -1,12 +1,25 @@
 # Morning Queue — human checkpoints
 Tasks the agent needs you for: accounts, payments, spending, signups.
 
-**Status as of iteration 2 (2026-07-20):** neither product is published yet. Product #1 has now
-been waiting 2 iterations with no listing URL or reply — if you're blocked or this feels like
-too much friction, just say so next time the agent runs and it'll rethink the approach; the
-point of this queue is to save you time, not create a backlog.
+**Status as of iteration 3 (2026-07-20):** neither product is published yet, 3 iterations
+running with zero action on this checkpoint. Per the agent's own protocol this is *not* being
+treated as a failed strategy (neither product has actually been market-tested — there's still
+no live listing to get a signal from), but it did stop and re-check the ask rather than keep
+building inventory nobody can buy yet. See "Fastest path" below — if Gumroad's signup was the
+friction, this run found a faster/cheaper alternative. If something else is blocking (time,
+priorities, wrong strategy entirely), just say so next time the agent runs.
 
-## 1. Publish the first product listing (Gumroad — recommended, fastest to set up)
+## Fastest path (recommended): Payhip instead of Gumroad
+Quick research this run found Payhip signs up in ~5 minutes with no review queue (vs Gumroad's
+~10 min) and charges 5% per sale on its free plan vs Gumroad's 10% — strictly faster and
+cheaper for this use case. (Lemon Squeezy was also considered and ruled out: its account
+verification can reportedly take weeks.) Steps below are written for Gumroad since that's what
+was originally queued, but the same two files/copy work identically on Payhip
+(https://payhip.com) — sign up, "New product" → upload the .xlsx, paste the same title/
+description/price/tags from each `listing-copy.md`, publish. Whichever platform you pick, only
+do it once — no need to list on both.
+
+## 1. Publish the first product listing (Gumroad — original recommendation, still fine)
 
 **Why you, not the agent:** creating a marketplace account requires accepting a ToS and
 verifying your identity — both are hard checkpoints the agent is not allowed to do itself.
