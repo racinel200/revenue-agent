@@ -1,9 +1,9 @@
 # Revenue Agent Ledger
 
-Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip); no-secret dry-run relay PROVEN end-to-end on GitHub Actions; content-marketing site built and pushed, awaiting one Pages toggle to go live | Next action: awaiting human on TWO independent items — (1) Lemon Squeezy API key + GitHub Actions secret (blocks autonomous publishing of future products), (2) a 1-click GitHub Pages toggle (blocks the new discoverability site from being reachable) — see morning-queue.md for exact copy-paste steps on both | Needs human: **yes, two items, neither is identity/money for item 2.** (1) File a Lemon Squeezy API key and add it as a GitHub Actions secret named `LEMONSQUEEZY_API_KEY` — that key cannot be scoped to products-only (no restricted-key feature exists), so the workflow's endpoint whitelist is the real enforcement layer and revoking the secret is the off-switch. (2) Settings → Pages → Deploy from branch → main /docs — no identity or money involved, the sandbox's GitHub API access is proxy-restricted from doing this itself.
+Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro digital product (2 listings LIVE on Payhip); Pages site LIVE per human (sandbox can't verify — host blocked at proxy); fixed a self-inflicted leak where the paid .xlsx files were freely downloadable from the now-public repo | Next action: awaiting human on TWO independent items — (1) Lemon Squeezy API key + GitHub Actions secret (blocks autonomous publishing of future products), (2) optional decision on whether to force-push a git-history purge of the old public .xlsx blobs (low urgency, agent won't do this unilaterally) — see morning-queue.md | Needs human: **yes, two items.** (1) File a Lemon Squeezy API key and add it as a GitHub Actions secret named `LEMONSQUEEZY_API_KEY` — no scoped-key option exists, so the workflow's endpoint whitelist is the real enforcement layer and revoking the secret is the off-switch. (2) Say go/no-go on a git-history rewrite + force-push to fully scrub the old .xlsx blobs from history (current tree is already clean as of iteration 9) — not urgent, purely the human's call.
 
 ## State
-- Status: iteration 8 complete
+- Status: iteration 9 complete
 - Active strategy: **Micro digital product**, live on Payhip (unchanged, $0 verified sales). In parallel, executing the human-approved pivot to an autonomous publish relay (GitHub Actions executes commerce API calls on the human's behalf; the agent's sandbox never holds a credential).
 - Strategy graveyard: empty.
 - Product #1: `products/airbnb-roi-calculator/Airbnb_STR_ROI_Calculator.xlsx` — **LIVE**: https://payhip.com/b/EIy4L — $19. Sales: $0 verified.
@@ -34,7 +34,49 @@ Ledger: $0 verified | $0 pending | $0 spent | Net $0 of $100 | Strategy: micro d
   - Did not touch the Lemon Squeezy relay work at all this iteration (workflow, validator, schema untouched) — that thread stays exactly where iteration 7 left it, waiting on its own separate checkpoint.
   - Did not create any account, spend anything, post to any external platform, or claim any affiliation with Airbnb/VRBO/any wedding platform (both guide pages explicitly disclaim affiliation in their footers). Spend budget remains $0.
   - Considered and rejected drafting Reddit/forum self-promo posts as an alternative: most of the relevant subreddits (r/AirBnBHosts, r/realestateinvesting, r/weddingplanning) restrict or ban vendor self-promotion outright, and posting itself would require the human's personal account/identity — a much higher-friction ask than a single Pages toggle, and riskier against the "no spam" legitimacy constraint if done carelessly. A genuine content site the human can decide whether to further promote (Pinterest, newsletters, etc.) felt like the safer first move; did not build those follow-on channels this iteration to keep the checkpoint list short.
-- Resume state for next session: **two independent, unrelated blockers now** — check `git log` / `morning-queue.md` for progress on *either*: (a) the Lemon Squeezy secret (iteration 7's ask, unchanged), (b) the GitHub Pages toggle (iteration 8's ask, new). They don't depend on each other — the human could do one, both, or neither. If neither has moved: do not re-ask either in a new form a second time; instead look for a third genuinely independent no-human-required action (e.g., draft — but do not post — Pinterest pin copy for the wedding tracker, since Pinterest is a much stronger organic-discovery fit for that niche than Reddit and doesn't carry the same self-promo-ban risk, though posting it still needs the human's own account). If the Pages toggle *has* landed: verify the site is actually reachable at `https://racinel200.github.io/revenue-agent/` (read-only HTTP check, no account needed) before reporting it as live. If the Lemon Squeezy secret *has* landed: proceed exactly as iteration 7 specified — draft the workflow diff adding the real API call, gated on a separate explicit human go-ahead before it runs for real.
+- Resume state after iteration 8: **two independent, unrelated blockers** — check `git log` / `morning-queue.md` for progress on *either*: (a) the Lemon Squeezy secret (iteration 7's ask, unchanged), (b) the GitHub Pages toggle (iteration 8's ask, new). They don't depend on each other — the human could do one, both, or neither. If neither has moved: do not re-ask either in a new form a second time; instead look for a third genuinely independent no-human-required action (e.g., draft — but do not post — Pinterest pin copy for the wedding tracker, since Pinterest is a much stronger organic-discovery fit for that niche than Reddit and doesn't carry the same self-promo-ban risk, though posting it still needs the human's own account). If the Pages toggle *has* landed: verify the site is actually reachable at `https://racinel200.github.io/revenue-agent/` (read-only HTTP check, no account needed) before reporting it as live. If the Lemon Squeezy secret *has* landed: proceed exactly as iteration 7 specified — draft the workflow diff adding the real API call, gated on a separate explicit human go-ahead before it runs for real.
+- **Iteration 9 — Pages-toggle follow-up + product-file exposure fix, DONE:**
+  - Checked `git log origin/main` for human activity since iteration 8: found commit `d1bb138`
+    (real `racinel200` account, not conversational input) — the human enabled Pages (chose the
+    free public-repo path over GitHub's paid Enterprise trial upsell) and left a new note in
+    `morning-queue.md`: the repo being public means the two paid `.xlsx` product files were
+    freely downloadable from the repo itself, undercutting the $19/$15 Payhip listings. Human
+    asked this agent to propose/flag a fix rather than stay silent about it.
+  - Tried to verify `https://racinel200.github.io/revenue-agent/` is actually serving (read-only
+    HTTP check, no account/identity involved) — blocked at the sandbox's own network-policy
+    layer: `racinel200.github.io` gets a 403 at the proxy (`recentRelayFailures` in the proxy
+    status endpoint confirms `connect_rejected`/policy denial, not a transient failure). Same
+    category of restriction as the commerce-API hosts blocked since iteration 5 and the Pages
+    API block from iteration 8 — did not retry-loop or try to route around it. Recorded as
+    unverified-from-here in `morning-queue.md` and asked the human for a one-time manual check.
+  - Fixed the flagged leak: `git rm` on both compiled `.xlsx` files (`products/airbnb-roi-
+    calculator/Airbnb_STR_ROI_Calculator.xlsx`, `products/wedding-budget-planner/
+    Wedding_Budget_Vendor_Tracker.xlsx`) from the current tree. Added a `NOTE.md` in each product
+    folder explaining the removal, linking the real Payhip checkout, and pointing at `build.py`
+    for anyone who wants to regenerate the file from source. This was "execute directly" work —
+    no identity, no money, no ToS, fully reversible (`git revert`), not a Checkpoint.
+  - Did **not** attempt a git-history rewrite to scrub the old blobs from history entirely — the
+    files are still reachable via commit `f1623f0` onward for anyone who digs. A history
+    rewrite requires a force-push to `main`, which is destructive/hard-to-reverse and could
+    affect any existing forks or clones; judged this squarely outside "execute directly" and
+    into checkpoint-adjacent territory even though it's not literally on the protocol's
+    Checkpoints list. Flagged it as an explicit, low-urgency either/or decision in
+    `morning-queue.md` rather than deciding unilaterally or silently leaving it unaddressed.
+  - Did not touch the Lemon Squeezy relay thread this iteration (unchanged, still awaiting the
+    secret). Did not create any account, spend anything, or post to any external platform. Spend
+    budget remains $0.
+- Resume state for next session: **two independent open items**, neither newly urgent: (a) the
+  Lemon Squeezy secret (iteration 7, unchanged), (b) the history-purge go/no-go this iteration
+  raised (low urgency — current tree is already clean, this is about old commits only). If
+  neither has moved by next run: do not re-ask either a third time in the same form; spend the
+  iteration on autonomous distribution work morning-queue.md already greenlit (SEO polish on the
+  two `docs/` guide pages — titles, meta descriptions, headings, expanded genuinely-useful
+  content, keep `sitemap.xml` current) since that's explicitly no-human-required and the listings
+  still have $0 verified sales after 9 iterations. If the human confirms the Pages URL is
+  actually reachable: no action needed, just note it in the ledger next run. If the human says
+  go on the history purge: that becomes the iteration's main task (likely `git filter-repo` +
+  force-push), still flagged clearly before executing since force-push is high-blast-radius even
+  with a go-ahead — re-confirm the exact scope (which paths, which branches) before running it.
 
 ## Known environment issue (read before next run)
 LibreOffice (`soffice`) cannot load documents via the CLI in this sandbox when given a
@@ -59,6 +101,34 @@ for every future spreadsheet product built in this environment, not just this on
   substitute here.
 
 ## History (append-only, newest first)
+
+### 2026-07-20 — Iteration 9
+- Read protocol + ledger. Checked `git log origin/main` since iteration 8: found a new human
+  commit, `d1bb138` (real `racinel200` account). Content: Pages is enabled (human chose the free
+  public-repo path), and a new flag — the repo being public means the two paid `.xlsx` files were
+  freely downloadable from the repo, undercutting the Payhip listings. Human asked for a
+  propose-and-flag response, not silence.
+- Tried a read-only reachability check of `https://racinel200.github.io/revenue-agent/` before
+  trusting the human's "should be live" — blocked at the sandbox's own network-policy proxy (403,
+  `connect_rejected`, confirmed via the proxy status endpoint's `recentRelayFailures`). Same
+  category as prior blocked hosts (iteration 5 commerce APIs, iteration 8 Pages-admin API). Did
+  not retry-loop; recorded as unverified-from-sandbox in `morning-queue.md` and asked the human
+  for a one-time manual check instead.
+- Fixed the flagged leak: removed both compiled `.xlsx` product files from the current tree
+  (`git rm`), added a `NOTE.md` in each product folder pointing to the real Payhip checkout and
+  to `build.py` for regenerating the file from source. Judged this squarely inside "execute
+  directly" — no identity/money/ToS, fully reversible.
+- Did not attempt to scrub the files from git history (would need a history rewrite + force-push
+  to `main` — destructive, could affect existing forks/clones, judged as checkpoint-adjacent even
+  though not literally on the protocol's Checkpoints list). Flagged an explicit, low-urgency
+  go/no-go for the human in `morning-queue.md` instead of deciding unilaterally.
+- Did not touch the Lemon Squeezy relay thread (unchanged). Did not create any account, spend
+  anything, or post to any external platform. Spend budget remains $0.
+- Committed 3 times this iteration (product-file removal + NOTE.md files, morning-queue.md
+  update, this ledger update), pushing immediately after each.
+- Flag for next run: two open items, neither urgent — Lemon Squeezy secret (unchanged) and the
+  history-purge decision (new, low-priority). If both still unmoved next run, default to
+  no-human-required SEO/content work on the `docs/` guides rather than re-asking a third time.
 
 ### 2026-07-20 — Iteration 8
 - Read protocol + ledger. Checked `git log` for a human reply since iteration 7: HEAD was still
