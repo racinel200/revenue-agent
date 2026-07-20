@@ -1,5 +1,62 @@
 # Morning Queue — human checkpoints
 
+## MAJOR UPDATE — relay ARMED + first test fire done + critical API finding (2026-07-20)
+
+Since your last iteration, the human + assistant completed the Lemon Squeezy setup you were
+waiting on AND ran the first real test. Read all of this before planning — your ledger's
+"awaiting Lemon Squeezy key" status is now STALE.
+
+### What got done (you don't need to re-request any of it)
+- Lemon Squeezy store created (ClearSheet Studio), **test-mode** API key generated.
+- Two GitHub Actions secrets are set: `LEMONSQUEEZY_API_KEY` and `LEMONSQUEEZY_STORE_ID`.
+- The relay was ARMED via a human-reviewed PR (#1, merged): `execute_intents.py` now runs
+  after the validator, with a HARD test-mode guard (`assert_test_mode()` calls /v1/users/me
+  and aborts unless test_mode=true). Endpoint whitelist, $5-$49 bounds, rate cap all intact.
+- First test intent (`testfire-0001`, product_create) was committed and the workflow RAN
+  SUCCESSFULLY end-to-end: validated -> test-mode confirmed -> executor attempted the call.
+
+### THE CRITICAL FINDING — read this, it changes the strategy
+The create call FAILED with **HTTP 405 Method Not Allowed**: `POST /v1/products` is NOT
+supported — "Supported methods: GET, HEAD." **Lemon Squeezy's /products endpoint is
+read-only. You cannot create products programmatically via that route.**
+
+This invalidates the core assumption behind the autonomous-publish pivot (iteration 6 picked
+Lemon Squeezy believing it had a product-creation API; it does not). The result file is at
+`publish-results/testfire-0001.json` with the full 405 error.
+
+### Your task next run: research the REAL API surface, then reassess honestly
+Do NOT just retry a different endpoint blindly. Investigate and write findings to the ledger:
+1. Does Lemon Squeezy's API support creating anything sellable programmatically? Check
+   `POST /v1/checkouts` — but note checkouts typically require a product/variant that ALREADY
+   EXISTS in the dashboard (i.e. created by hand). If so, autonomous end-to-end creation is
+   NOT achievable here; a human dashboard step remains mandatory.
+2. If Lemon Squeezy can't do autonomous product creation, evaluate whether ANY compliant
+   platform lets a script create sellable products without a human (be skeptical — the pattern
+   across every platform tried, incl. the payment-API proxy blocks since iteration 5, is that
+   money-handling platforms deliberately require a human to create the things that take money).
+3. Reach an HONEST conclusion and state it plainly, even if it's "fully autonomous publishing
+   is not achievable on a compliant platform; the working model is hybrid — agent builds
+   products + drafts listings, human does the ~10-min publish." That is a valid, useful result,
+   not a failure. Do not manufacture a workaround that depends on deception or ToS violation.
+
+### Context the human wants you to hold
+- The relay ARCHITECTURE is proven and safe (test-mode guard works, no money touched). If a
+  usable create/checkout endpoint exists, the relay is ready. The blocker is the PLATFORM API,
+  not your pipeline.
+- Going live (swapping to a live key) is explicitly OFF THE TABLE until (a) a working create
+  path is proven in test mode, and (b) the human deliberately approves it. Do not request a
+  live key next run.
+- Both Payhip listings remain LIVE ($0 verified sales so far). Distribution (the Pages site,
+  guide SEO) is still real, autonomous work you can do regardless of how the API question
+  resolves — an unseen product earns $0.
+
+### Still-open, low-urgency (unchanged): git-history purge of old .xlsx blobs
+The human has NOT decided on the destructive history-rewrite. Default is leave-as-is. Do not
+force-push history unless the human explicitly says go.
+
+---
+(Older resolved/superseded notes below this line are historical.)
+
 ## ACTION NEEDED — Iteration 9 (2026-07-20): optional, low-urgency — purge product files from git history?
 
 Fixed the free-download issue from the note below: removed both compiled `.xlsx` files from the
